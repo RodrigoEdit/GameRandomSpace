@@ -1,0 +1,20 @@
+Minecraft Dungeons
+Es parte del universo de Minecraft y sí fue desarrollado con Unreal Engine. De hecho, Mojang explica que eligieron Unreal porque necesitaban buenas animaciones, efectos de partículas y soporte para el multijugador. 
+Además, es muy fácil de analizar:
+1. Flujo del juego
+•	El jugador selecciona una misión. 
+•	Explora mazmorras. 
+•	Derrota enemigos. 
+•	Obtiene armas y objetos. 
+•	Avanza por diferentes niveles. 
+•	Enfrenta enemigos más fuertes y jefes. 
+2. Elementos gráficos y mecánicas
+•	Personajes y criaturas de Minecraft. 
+•	Escenarios en forma de mazmorras. 
+•	Animaciones de combate. 
+•	Efectos visuales y partículas. 
+•	Armas cuerpo a cuerpo y a distancia. 
+•	Sistema de objetos y equipamiento. 
+•	Multijugador cooperativo de hasta 4 jugadores. 
+3. Motor de juego
+•	Unreal Engine.  
