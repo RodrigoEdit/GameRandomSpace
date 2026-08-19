@@ -1,3 +1,9 @@
+Objetivos:
+
+1- Nombre del videojuego ¿Porqué?
+2- Historia del videojuego
+3- Género. ¿Porqué?
+
 Minecraft Dungeons
 Es parte del universo de Minecraft y sí fue desarrollado con Unreal Engine. De hecho, Mojang explica que eligieron Unreal porque necesitaban buenas animaciones, efectos de partículas y soporte para el multijugador. 
 Además, es muy fácil de analizar:
