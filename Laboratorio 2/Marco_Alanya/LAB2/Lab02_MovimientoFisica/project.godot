@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Lab01_Godot2D"
-run/main_scene="uid://cffdswxidsyci"
+run/main_scene="uid://ds23fa7jd10wv"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
