@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dt0f7ylktbrjv"]
+
+[ext_resource type="PackedScene" uid="uid://btrbk5cq4wbsc" path="res://player.tscn" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://bnkn0c2lhwfev" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://bvc5igrjhfglp" path="res://collectible.tscn" id="2_h2yge"]
+
+[node name="Main" type="Node2D" unique_id=1769155624 groups=["Player"]]
+script = ExtResource("1_h2yge")
+
+[node name="Player" parent="." unique_id=1025292488 instance=ExtResource("1_0xm2m")]
+
+[node name="Collectible" parent="." unique_id=1347512916 instance=ExtResource("2_h2yge")]
+
+[node name="Collectible2" parent="." unique_id=920908288 instance=ExtResource("2_h2yge")]
+
+[node name="Collectible3" parent="." unique_id=493586438 instance=ExtResource("2_h2yge")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1555760087]
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer" unique_id=1266454175]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Puntos: 0"
