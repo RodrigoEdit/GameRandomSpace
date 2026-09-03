@@ -1,0 +1,25 @@
+Objetivos:
+
+1- Nombre del videojuego ¿Porqué?
+2- Historia del videojuego
+3- Género. ¿Porqué?
+
+Titulo: Ecos de Piedra: El Retorno a los Andes
+El nombre une el escenario base (los restos líticos de altura y los misterios antiguos) 
+con la historia de los dos varones que tienen que oír los indicios del ayer 
+—incluidos los seres etéreos y las máquinas dejadas atrás— para hallar el camino hacia arriba.
+
+Historia:
+Dos hermanos se escapan de la caravana arqueológica de sus padres en Cusco y caen accidentalmente 
+a través del suelo hacia un acueducto subterráneo que revela una colosal ciudadela inca oculta.
+Con mazos gruesos para pelear y aprendiendo hechizos viejos de roca, tienen que recorrer el laberinto 
+en desplazamiento lateral, hablar con fantasmas y protectores, y luchar contra soldados antiguos y 
+seres míticos de los Andes para vivir y volver junto a sus padres.
+
+Genero: 
+Plataformas y acción en 2D (scroll lateral) con elementos de aventura y combates cuerpo a cuerpo
+
+El desplazamiento en scroll lateral y la exploración de ruinas encajan perfectamente con las mecánicas 
+clásicas de plataformas 2D. Además, la incorporación de conjuntos de combate robusto y hechicería básica 
+introduce un nivel dinámico de interacción física y solución de acertijos dependiente del escenario 
+circundante.
