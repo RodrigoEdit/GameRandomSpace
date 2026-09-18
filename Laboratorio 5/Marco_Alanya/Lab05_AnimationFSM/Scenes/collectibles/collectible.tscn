@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bwwdmg2np2c6h"]
+
+[ext_resource type="Script" uid="uid://cei56wboxtf3" path="res://scripts/collectible.gd" id="1_0ft0m"]
+[ext_resource type="Texture2D" uid="uid://bdj6jnylhj65b" path="res://icon.svg" id="2_vw7kr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4mmox"]
+
+[node name="Collectible" type="Area2D" unique_id=1127669181 groups=["collectible"]]
+script = ExtResource("1_0ft0m")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=79488817]
+position = Vector2(0.49999934, 2.3841858e-07)
+scale = Vector2(0.1015625, 0.109375)
+texture = ExtResource("2_vw7kr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1532884536]
+shape = SubResource("CircleShape2D_4mmox")
