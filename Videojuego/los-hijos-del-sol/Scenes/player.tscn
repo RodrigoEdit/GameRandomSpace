@@ -3,9 +3,8 @@
 [ext_resource type="Script" uid="uid://c3qrknhyn4in3" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://ciuu0dokpbj2u" path="res://Sprites/maria.png" id="2_6t5aa"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hqtel"]
-radius = 44.0
-height = 212.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jjgbg"]
+size = Vector2(35, 82)
 
 [sub_resource type="Animation" id="Animation_sweqy"]
 length = 0.001
@@ -66,10 +65,12 @@ _data = {
 script = ExtResource("1_cvnsp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=5045217]
-position = Vector2(9, 1)
-shape = SubResource("CapsuleShape2D_hqtel")
+position = Vector2(3.5, 0)
+shape = SubResource("RectangleShape2D_jjgbg")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1022001946]
+position = Vector2(0, 1)
+scale = Vector2(0.4, 0.43)
 texture = ExtResource("2_6t5aa")
 hframes = 4
 vframes = 2
@@ -77,3 +78,5 @@ region_rect = Rect2(-4.6568604, -2.6120453, 504.65686, 502.61206)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1530092175]
 libraries/ = SubResource("AnimationLibrary_dw050")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=303156645]

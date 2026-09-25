@@ -10,10 +10,14 @@ config_version=5
 
 [application]
 
-config/name="LOS HIJOS DEL SOL"
-run/main_scene="uid://dxuq3qjes7blx"
+config/name="Nuevo Proyecto de Juego"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [physics]
 

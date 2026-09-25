@@ -1,3 +1,34 @@
 [gd_scene format=3 uid="uid://dxuq3qjes7blx"]
 
+[ext_resource type="PackedScene" uid="uid://b044nesryjg0k" path="res://Scenes/player.tscn" id="1_jjgbg"]
+[ext_resource type="PackedScene" uid="uid://68ecqbgtwdy8" path="res://Scenes/Home/cuadrados.tscn" id="2_bo1nx"]
+[ext_resource type="PackedScene" uid="uid://y22rop0j6cn1" path="res://Scenes/Home/rectangulo.tscn" id="3_8gbba"]
+[ext_resource type="Texture2D" uid="uid://be74u1a7lgtma" path="res://Content/piso.jpg" id="4_jjvhh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_slk4c"]
+size = Vector2(1264.5, 20)
+
 [node name="Main" type="Node2D" unique_id=483569880]
+
+[node name="Player" parent="." unique_id=574040266 instance=ExtResource("1_jjgbg")]
+position = Vector2(789.05005, 324.83002)
+
+[node name="Suelo" type="StaticBody2D" parent="." unique_id=1719852698]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Suelo" unique_id=971948043]
+position = Vector2(631.75, 491)
+shape = SubResource("RectangleShape2D_slk4c")
+
+[node name="Cuadrados" parent="." unique_id=1794772756 instance=ExtResource("2_bo1nx")]
+position = Vector2(1013, 412)
+
+[node name="Cuadrados2" parent="." unique_id=761953385 instance=ExtResource("2_bo1nx")]
+position = Vector2(1134, 337)
+
+[node name="Cuadrados3" parent="." unique_id=953474669 instance=ExtResource("3_8gbba")]
+position = Vector2(1257, 267)
+
+[node name="Piso" type="Sprite2D" parent="." unique_id=1585317062]
+position = Vector2(630.75, 491.25)
+scale = Vector2(1.1634616, 0.033667594)
+texture = ExtResource("4_jjvhh")
