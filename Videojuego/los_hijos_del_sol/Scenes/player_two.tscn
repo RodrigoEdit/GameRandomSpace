@@ -1,0 +1,146 @@
+[gd_scene format=3 uid="uid://bep7qvd27emfd"]
+
+[ext_resource type="Script" uid="uid://dpufvw3bwrqpu" path="res://Scripts/player_two.gd" id="1_p8sfr"]
+[ext_resource type="Texture2D" uid="uid://08q6rrxfq35q" path="res://Sprites/version_final.png" id="2_p8sfr"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8w0r3"]
+radius = 11.0
+height = 46.0
+
+[sub_resource type="Animation" id="Animation_efiyu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player_two/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_x78of"]
+resource_name = "idle_down"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player_two/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_5yqub"]
+resource_name = "idle_left"
+
+[sub_resource type="Animation" id="Animation_ce5mo"]
+resource_name = "idle_right"
+
+[sub_resource type="Animation" id="Animation_fkqre"]
+resource_name = "idle_up"
+
+[sub_resource type="Animation" id="Animation_057up"]
+resource_name = "walk_down"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player_two/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.36666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_25qpn"]
+resource_name = "walk_left"
+length = 1.7666667
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player_two/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1061673, 0.53333336, 0.93333334, 1.3666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_ykn8f"]
+resource_name = "walk_right"
+length = 1.6666666
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player_two/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.025044322, 0.43333328, 0.8333334, 1.2333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_0xvya"]
+resource_name = "walk_up"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player_two/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.33333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [14, 15]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qjixd"]
+_data = {
+&"RESET": SubResource("Animation_efiyu"),
+&"idle_down": SubResource("Animation_x78of"),
+&"idle_left": SubResource("Animation_5yqub"),
+&"idle_right": SubResource("Animation_ce5mo"),
+&"idle_up": SubResource("Animation_fkqre"),
+&"walk_down": SubResource("Animation_057up"),
+&"walk_left": SubResource("Animation_25qpn"),
+&"walk_right": SubResource("Animation_ykn8f"),
+&"walk_up": SubResource("Animation_0xvya")
+}
+
+[node name="Player_two" type="CharacterBody2D" unique_id=1197545596]
+script = ExtResource("1_p8sfr")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=272424745]
+texture_filter = 1
+texture = ExtResource("2_p8sfr")
+hframes = 4
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=208938564]
+position = Vector2(0, 63)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_8w0r3")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1074557345]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_qjixd")

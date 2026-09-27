@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ciuu0dokpbj2u"
-path="res://.godot/imported/maria.png-0a66e06e188209e4f25fa20c3cee636a.ctex"
+uid="uid://1nmcxxmgqcgf"
+path="res://.godot/imported/verdadero.png-9b78a2343e1fab228f542c743332a972.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/maria.png"
-dest_files=["res://.godot/imported/maria.png-0a66e06e188209e4f25fa20c3cee636a.ctex"]
+source_file="res://Sprites/verdadero.png"
+dest_files=["res://.godot/imported/verdadero.png-9b78a2343e1fab228f542c743332a972.ctex"]
 
 [params]
 
