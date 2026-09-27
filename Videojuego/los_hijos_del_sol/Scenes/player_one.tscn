@@ -105,3 +105,5 @@ animation = &"walk_up"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1559960668]
 position = Vector2(1, 0)
 shape = SubResource("CapsuleShape2D_h7xjn")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=933708724]
