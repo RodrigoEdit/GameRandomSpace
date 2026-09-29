@@ -89,11 +89,11 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h7xjn"]
-radius = 26.0
-height = 92.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pewwp"]
+radius = 13.0
+height = 26.0
 
-[node name="Player_one" type="CharacterBody2D" unique_id=30051457]
+[node name="Player_one" type="CharacterBody2D" unique_id=30051457 groups=["player"]]
 script = ExtResource("1_j3pwt")
 metadata/_edit_horizontal_guides_ = [-97.0]
 
@@ -103,7 +103,7 @@ sprite_frames = SubResource("SpriteFrames_h7xjn")
 animation = &"walk_up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1559960668]
-position = Vector2(1, 0)
-shape = SubResource("CapsuleShape2D_h7xjn")
+position = Vector2(2, 33.5)
+shape = SubResource("CapsuleShape2D_pewwp")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=933708724]
