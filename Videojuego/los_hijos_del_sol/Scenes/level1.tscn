@@ -1,8 +1,8 @@
 [gd_scene format=4 uid="uid://dddhteax4cdgc"]
 
 [ext_resource type="TileSet" uid="uid://dtq22vryjyvn2" path="res://Resource/new_tile_set.tres" id="1_vly50"]
-[ext_resource type="PackedScene" uid="uid://7jhrm466a8k5" path="res://Scenes/player_one.tscn" id="2_vly50"]
 [ext_resource type="PackedScene" uid="uid://hjebhnju4k07" path="res://Scenes/esqueleto.tscn" id="3_c5erv"]
+[ext_resource type="PackedScene" uid="uid://bep7qvd27emfd" path="res://Scenes/player_two.tscn" id="4_lyd6k"]
 
 [node name="Level1" type="Node2D" unique_id=103695175]
 
@@ -19,8 +19,8 @@ polygon = PackedVector2Array(-287, -484, 33, -483, 33, -34, 747, -32, 748, -287,
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="TileMapLayer/Paredes" unique_id=201643469]
 polygon = PackedVector2Array(-800, -226, -798, 355, -1119, 355, -1119, 736, -928, 736, -927, 992, -992, 992, -992, 800, -1184, 800, -1184, 286, -864, 287, -864, -160, -1184, -160, -1184, -865, -224, -864, -223, -672, -32, -672, -31, -865, 1247, -865, 1247, 35, 1184, 34, 1184, 160, 1313, 160, 1311, 993, 480, 991, 482, 608, -288, 608, -288, 543, -351, 543, -351, 804, -608, 801, -608, 991, -673, 991, -671, 735, -417, 735, -417, 479, -223, 480, -223, 544, 801, 543, 802, 609, 545, 608, 545, 926, 1247, 927, 1247, 606, 927, 609, 927, 542, 1247, 543, 1247, 224, 1119, 224, 1120, -32, 1184, -32, 1183, -802, 481, -799, 482, -567, 352, -567, 352, -800, 32, -800, 32, -608, -289, -607, -289, -799, -1120, -801, -1119, -224)
 
-[node name="Player_one" parent="." unique_id=30051457 instance=ExtResource("2_vly50")]
-position = Vector2(280, -571)
-
 [node name="Skeleton" parent="." unique_id=1425578663 instance=ExtResource("3_c5erv")]
 position = Vector2(957, -183)
+
+[node name="Player_two" parent="." unique_id=1197545596 instance=ExtResource("4_lyd6k")]
+position = Vector2(200, -523)
