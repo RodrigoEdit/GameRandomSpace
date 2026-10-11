@@ -3,6 +3,7 @@
 [ext_resource type="TileSet" uid="uid://dtq22vryjyvn2" path="res://Resource/new_tile_set.tres" id="1_vly50"]
 [ext_resource type="PackedScene" uid="uid://hjebhnju4k07" path="res://Scenes/esqueleto.tscn" id="3_c5erv"]
 [ext_resource type="PackedScene" uid="uid://bep7qvd27emfd" path="res://Scenes/player_two.tscn" id="4_lyd6k"]
+[ext_resource type="PackedScene" uid="uid://dnyfmxgijbj0j" path="res://Scenes/puerta.tscn" id="4_y4dr7"]
 
 [node name="Level1" type="Node2D" unique_id=103695175]
 
@@ -23,4 +24,6 @@ polygon = PackedVector2Array(-800, -226, -798, 355, -1119, 355, -1119, 736, -928
 position = Vector2(957, -183)
 
 [node name="Player_two" parent="." unique_id=1197545596 instance=ExtResource("4_lyd6k")]
-position = Vector2(200, -523)
+position = Vector2(-744, -331)
+
+[node name="Puerta" parent="." unique_id=806088042 instance=ExtResource("4_y4dr7")]
