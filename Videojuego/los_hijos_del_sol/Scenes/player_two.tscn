@@ -4,12 +4,16 @@
 [ext_resource type="Texture2D" uid="uid://bxbfkixr5lm4e" path="res://Sprites/wer wer.png" id="2_p8sfr"]
 [ext_resource type="Texture2D" uid="uid://08q6rrxfq35q" path="res://Sprites/version_final.png" id="3_ytrmp"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8w0r3"]
-radius = 11.0
-height = 62.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ytrmp"]
+radius = 36.0
+height = 72.0
 
 [sub_resource type="Animation" id="Animation_efiyu"]
 length = 0.001
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8w0r3"]
+radius = 49.0
+height = 98.0
 
 [sub_resource type="Animation" id="Animation_p8sfr"]
 resource_name = "death"
@@ -505,6 +509,9 @@ _data = {
 &"walk_up": SubResource("Animation_0xvya")
 }
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_efiyu"]
+bg_color = Color(6.738305e-07, 0.37969115, 0.3066781, 1)
+
 [node name="Player_two" type="CharacterBody2D" unique_id=1197545596]
 script = ExtResource("1_p8sfr")
 
@@ -517,9 +524,9 @@ vframes = 4
 region_rect = Rect2(15.37899, 133.24998, 182.621, 409.75)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=208938564]
-position = Vector2(-1, 67)
+position = Vector2(-1, 28)
 rotation = 1.5707964
-shape = SubResource("CapsuleShape2D_8w0r3")
+shape = SubResource("CapsuleShape2D_ytrmp")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1074557345]
 root_node = NodePath("../..")
@@ -527,3 +534,17 @@ libraries/ = SubResource("AnimationLibrary_qjixd")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1133255050]
 zoom = Vector2(0.5, 0.5)
+
+[node name="HealthBar2" type="ProgressBar" parent="." unique_id=123424229]
+offset_left = -42.0
+offset_top = -87.0
+offset_right = 30.0
+offset_bottom = -60.0
+theme_override_font_sizes/font_size = 13
+theme_override_styles/background = SubResource("StyleBoxFlat_efiyu")
+show_percentage = false
+
+[node name="Label" type="Label" parent="HealthBar2" unique_id=676400669]
+layout_mode = 0
+offset_right = 72.0
+offset_bottom = 26.0

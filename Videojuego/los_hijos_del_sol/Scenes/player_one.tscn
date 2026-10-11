@@ -90,8 +90,11 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pewwp"]
-radius = 13.0
-height = 26.0
+radius = 19.0
+height = 56.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j3pwt"]
+bg_color = Color(0, 0.4509804, 0, 1)
 
 [node name="Player_one" type="CharacterBody2D" unique_id=30051457 groups=["player"]]
 script = ExtResource("1_j3pwt")
@@ -103,7 +106,21 @@ sprite_frames = SubResource("SpriteFrames_h7xjn")
 animation = &"walk_up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1559960668]
-position = Vector2(2, 33.5)
+position = Vector2(1, 6)
 shape = SubResource("CapsuleShape2D_pewwp")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=933708724]
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1927600444]
+offset_left = -29.0
+offset_top = -65.0
+offset_right = 30.0
+offset_bottom = -48.0
+theme_override_font_sizes/font_size = 9
+theme_override_styles/background = SubResource("StyleBoxFlat_j3pwt")
+show_percentage = false
+
+[node name="Label" type="Label" parent="HealthBar" unique_id=261803400]
+layout_mode = 0
+offset_right = 59.0
+offset_bottom = 23.0
