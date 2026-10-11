@@ -1,0 +1,123 @@
+[gd_scene format=3 uid="uid://hbg178o1baue"]
+
+[ext_resource type="Texture2D" uid="uid://bwawtq2jmlvwc" path="res://Sprites/menu_lhds.png" id="1_4ty7h"]
+[ext_resource type="Script" uid="uid://kgrw8jk8n2c" path="res://Scripts/UI/main_menu.gd" id="1_8kepm"]
+[ext_resource type="AudioStream" uid="uid://ce6rmrr34crh6" path="res://Audio/Koi-discovery - Atlas_Shoulders.mp3.mp3" id="3_rsv8s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ibiwo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_upmly"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o7q0r"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5icse"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wiexs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_41ei5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8ajaj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_blqmq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7pykw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_70o3i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cxxxw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a831j"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v543c"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a6854"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_722lq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_typ83"]
+
+[node name="MainMenu" type="Control" unique_id=159042218]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8kepm")
+
+[node name="Background" type="TextureRect" parent="." unique_id=906132161]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_4ty7h")
+
+[node name="ButtonsGroup" type="Control" parent="." unique_id=2004919040]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BtnPlay" type="Button" parent="ButtonsGroup" unique_id=1822787993]
+layout_mode = 0
+offset_left = 815.0
+offset_top = 495.0
+offset_right = 1114.0
+offset_bottom = 587.0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ibiwo")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_upmly")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_o7q0r")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5icse")
+
+[node name="BtnOptions" type="Button" parent="ButtonsGroup" unique_id=1997113845]
+layout_mode = 0
+offset_left = 807.0
+offset_top = 612.0
+offset_right = 1115.0
+offset_bottom = 702.0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_wiexs")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_41ei5")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_8ajaj")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_blqmq")
+
+[node name="BtnCredits" type="Button" parent="ButtonsGroup" unique_id=600724757]
+layout_mode = 0
+offset_left = 805.0
+offset_top = 725.0
+offset_right = 1114.0
+offset_bottom = 815.0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7pykw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_70o3i")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_cxxxw")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_a831j")
+
+[node name="BtnQuit" type="Button" parent="ButtonsGroup" unique_id=976986949]
+layout_mode = 0
+offset_left = 810.0
+offset_top = 834.0
+offset_right = 1114.0
+offset_bottom = 935.0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_v543c")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_a6854")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_722lq")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_typ83")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=306194556]
+stream = ExtResource("3_rsv8s")
+volume_db = 5.832
+autoplay = true
+
+[node name="FadeOverlay" type="ColorRect" parent="." unique_id=1386207535]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
