@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://b8qsq8w3cqdrh"]
+
+[ext_resource type="Script" uid="uid://ckxopdarthtal" path="res://Scripts/ItemPopupManager.gd" id="1_onpnd"]
+
+[node name="ItemPopupManager" type="CanvasLayer" unique_id=361431428]
+process_mode = 3
+layer = 100
+script = ExtResource("1_onpnd")
+
+[node name="Dim" type="ColorRect" parent="." unique_id=1699611363]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.2509804)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1180856246]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PopupPanel" type="PanelContainer" parent="CenterContainer" unique_id=537601620]
+custom_minimum_size = Vector2(360, 0)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PopupPanel" unique_id=1976654028]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PopupPanel/MarginContainer" unique_id=1296951168]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="NameLabel" type="Label" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer" unique_id=1477803632]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="IconRect" type="TextureRect" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer" unique_id=1861406913]
+texture_filter = 1
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DescriptionLabel" type="Label" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer" unique_id=798065451]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="QuestionLabel" type="Label" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer" unique_id=38887511]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer" unique_id=567985651]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="YesButton" type="Button" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer/ButtonsContainer" unique_id=519906034]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "SI"
+
+[node name="NoButton" type="Button" parent="CenterContainer/PopupPanel/MarginContainer/VBoxContainer/ButtonsContainer" unique_id=1243544487]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "NO"

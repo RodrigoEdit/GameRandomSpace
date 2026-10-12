@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://c8yjeir544gpm"]
+
+[ext_resource type="Script" uid="uid://cnxpwntjsgtcf" path="res://Scripts/ItemSparkle.gd" id="1_8jdni"]
+[ext_resource type="Script" uid="uid://dys2rqs8b43xo" path="res://Scripts/ItemData.gd" id="2_1cnjx"]
+[ext_resource type="Texture2D" uid="uid://ciy6ie5l4dvrs" path="res://Sprites/destello_n.png" id="2_51a83"]
+[ext_resource type="FontFile" uid="uid://b65mhiv5tlegh" path="res://Font/pixel.ttf" id="3_51a83"]
+[ext_resource type="Resource" uid="uid://dte6y0ubw6jhi" path="res://Resource/items/hojas_coca_sagradas.tres" id="3_mj7no"]
+[ext_resource type="Resource" uid="uid://cs6k0q2537xt0" path="res://Resource/items/kero_ceremonial.tres" id="4_osnd3"]
+[ext_resource type="Resource" uid="uid://o5i308tpyl3a" path="res://Resource/items/maiz_sagrado.tres" id="5_6moc6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w7mgy"]
+radius = 2.630589
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_nnwve"]
+blend_mode = 1
+
+[node name="ItemSparkle" type="Area2D" unique_id=671727127]
+z_index = 100
+scale = Vector2(0.3, 0.3)
+script = ExtResource("1_8jdni")
+loot_table = Array[ExtResource("2_1cnjx")]([ExtResource("3_mj7no"), ExtResource("4_osnd3"), ExtResource("5_6moc6")])
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1149287496]
+scale = Vector2(5, 5)
+shape = SubResource("CircleShape2D_w7mgy")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=477910809]
+material = SubResource("CanvasItemMaterial_nnwve")
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_51a83")
+
+[node name="PromptLabel" type="Label" parent="." unique_id=1029437876]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 70.0
+offset_top = -26.666666
+offset_right = 474.0
+offset_bottom = 24.333334
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_51a83")
+theme_override_font_sizes/font_size = 50
+text = "[E] Inspeccionar"

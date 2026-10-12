@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dte6y0ubw6jhi"]
+
+[ext_resource type="Script" uid="uid://dys2rqs8b43xo" path="res://Scripts/ItemData.gd" id="1_5px5i"]
+[ext_resource type="Texture2D" uid="uid://vpwop1uqrotj" path="res://Sprites/hojas.png" id="1_q2yti"]
+
+[resource]
+script = ExtResource("1_5px5i")
+item_id = &"hojas_cocas"
+item_name = "Hojas Coca Sagradas"
+item_description = "Aumenta Velocidad y Estamina"
+item_icon = ExtResource("1_q2yti")
+metadata/_custom_type_script = "uid://dys2rqs8b43xo"

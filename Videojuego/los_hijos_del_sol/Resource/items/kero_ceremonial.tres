@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cs6k0q2537xt0"]
+
+[ext_resource type="Script" uid="uid://dys2rqs8b43xo" path="res://Scripts/ItemData.gd" id="1_gl5kq"]
+[ext_resource type="Texture2D" uid="uid://ce5k8cdwwocmy" path="res://Sprites/kero_i.png" id="1_tb2en"]
+
+[resource]
+script = ExtResource("1_gl5kq")
+item_id = &"kero_ceremonial"
+item_name = "Kero Ceremonial"
+item_description = "Restaura una parte de tu vida."
+item_icon = ExtResource("1_tb2en")
+metadata/_custom_type_script = "uid://dys2rqs8b43xo"
