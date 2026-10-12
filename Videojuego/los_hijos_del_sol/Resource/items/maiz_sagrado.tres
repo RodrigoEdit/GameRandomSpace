@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://o5i308tpyl3a"]
 
+[ext_resource type="Texture2D" uid="uid://buq4ggr5je28a" path="res://Sprites/escudo.png" id="1_20k4x"]
 [ext_resource type="Script" uid="uid://dys2rqs8b43xo" path="res://Scripts/ItemData.gd" id="1_74su6"]
 [ext_resource type="Texture2D" uid="uid://c0ylw0yy2pxfj" path="res://Sprites/maiz.png" id="1_dsud3"]
 
@@ -9,4 +10,8 @@ item_id = &"maiz_sagrado"
 item_name = "Maiz Sagrado"
 item_description = "Escudo Temporal (Absorbe un impacto)"
 item_icon = ExtResource("1_dsud3")
+item_type = 1
+max_stack = 5
+effect_type = 3
+effect_icon = ExtResource("1_20k4x")
 metadata/_custom_type_script = "uid://dys2rqs8b43xo"

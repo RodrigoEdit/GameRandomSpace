@@ -15,6 +15,7 @@ enum Mode { RANDOM_LOOT, FIXED_ITEM }
 @export var fixed_item_name: String = ""
 @export_multiline var fixed_item_desc: String = ""
 @export var fixed_item_icon: Texture2D
+@export var fixed_item_data: ItemData  # opcional: un .tres completo (ej. armas)
 
 @export_group("Destello")
 @export_range(0.1, 3.0, 0.05) var blink_half_period: float = 0.6
@@ -76,6 +77,8 @@ func _roll_loot() -> ItemData:
 
 
 func _build_fixed_item() -> ItemData:
+	if fixed_item_data != null:
+		return fixed_item_data
 	if fixed_item_name.is_empty():
 		return null
 	var item: ItemData = ItemData.new()

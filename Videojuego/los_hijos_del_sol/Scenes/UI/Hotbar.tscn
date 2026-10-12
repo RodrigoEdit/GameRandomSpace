@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://bkrtwwdkty2q3"]
+
+[ext_resource type="Script" uid="uid://dh5w1qbbmlild" path="res://Scripts/UI/PlayerHUD.gd" id="1_xlsws"]
+[ext_resource type="Script" uid="uid://cht0xs7ko4b3k" path="res://Scripts/UI/HotbarManager.gd" id="2_mmfkx"]
+
+[node name="PlayerHUD" type="CanvasLayer" unique_id=1898589744]
+layer = 10
+script = ExtResource("1_xlsws")
+
+[node name="Root" type="Control" parent="." unique_id=766046930]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BottomPanel" type="VBoxContainer" parent="Root" unique_id=723208130]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -66.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 6
+
+[node name="StatusRow" type="HBoxContainer" parent="Root/BottomPanel" unique_id=893944776]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 8
+
+[node name="HealthBar" type="ProgressBar" parent="Root/BottomPanel/StatusRow" unique_id=1414414877]
+custom_minimum_size = Vector2(200, 18)
+layout_mode = 2
+
+[node name="StatusBuffsContainer" type="HBoxContainer" parent="Root/BottomPanel/StatusRow" unique_id=1447403717]
+layout_mode = 2
+
+[node name="UsageBar" type="ProgressBar" parent="Root/BottomPanel" unique_id=1246860995]
+custom_minimum_size = Vector2(200, 8)
+layout_mode = 2
+size_flags_horizontal = 4
+show_percentage = false
+
+[node name="Hotbar" type="HBoxContainer" parent="Root/BottomPanel" unique_id=2009432535]
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("2_mmfkx")

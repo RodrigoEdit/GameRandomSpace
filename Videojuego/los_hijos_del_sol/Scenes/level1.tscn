@@ -5,8 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://cbd6qbhmsm6ih" path="res://Sprites/mazo.png" id="3_didp7"]
 [ext_resource type="PackedScene" uid="uid://bep7qvd27emfd" path="res://Scenes/player_two.tscn" id="4_lyd6k"]
 [ext_resource type="PackedScene" uid="uid://c8yjeir544gpm" path="res://Scenes/ItemSparkle.tscn" id="4_y4dr7"]
-[ext_resource type="Texture2D" uid="uid://dtl2n0q42qqgu" path="res://Sprites/mantel.png" id="6_2a60c"]
 [ext_resource type="PackedScene" uid="uid://dnyfmxgijbj0j" path="res://Scenes/puerta.tscn" id="5_y4dr7"]
+[ext_resource type="Texture2D" uid="uid://dtl2n0q42qqgu" path="res://Sprites/mantel.png" id="6_2a60c"]
+[ext_resource type="PackedScene" uid="uid://bkrtwwdkty2q3" path="res://Scenes/UI/Hotbar.tscn" id="8_4iphx"]
 
 [node name="Level1" type="Node2D" unique_id=103695175]
 
@@ -64,9 +65,19 @@ texture = ExtResource("3_didp7")
 [node name="Mantel" type="Sprite2D" parent="." unique_id=1521146832]
 modulate = Color(0.38170326, 0.38170323, 0.38170323, 1)
 texture_filter = 1
-position = Vector2(881, 702)
+position = Vector2(881, 701.99994)
 scale = Vector2(0.15730481, 0.12553263)
 texture = ExtResource("6_2a60c")
-position = Vector2(-744, -331)
 
 [node name="Puerta" parent="." unique_id=806088042 instance=ExtResource("5_y4dr7")]
+
+[node name="PlayerHUD" parent="." unique_id=1898589744 instance=ExtResource("8_4iphx")]
+
+[node name="ItemSparkle6" parent="." unique_id=504785622 instance=ExtResource("4_y4dr7")]
+position = Vector2(-8, 296)
+
+[node name="ItemSparkle7" parent="." unique_id=1301994848 instance=ExtResource("4_y4dr7")]
+position = Vector2(-184, 258)
+
+[node name="ItemSparkle8" parent="." unique_id=1296947153 instance=ExtResource("4_y4dr7")]
+position = Vector2(-548, 458)
