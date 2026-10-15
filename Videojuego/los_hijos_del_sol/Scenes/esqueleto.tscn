@@ -151,7 +151,9 @@ position = Vector2(-10, 45)
 shape = SubResource("CapsuleShape2D_h7xjn")
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=1156939393]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1985658395]
+visible = false
 position = Vector2(-5, -19)
 shape = SubResource("CapsuleShape2D_54qbj")

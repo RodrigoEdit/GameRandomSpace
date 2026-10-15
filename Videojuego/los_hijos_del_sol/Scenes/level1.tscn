@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://hjebhnju4k07" path="res://Scenes/esqueleto.tscn" id="3_c5erv"]
 [ext_resource type="Texture2D" uid="uid://cbd6qbhmsm6ih" path="res://Sprites/mazo.png" id="3_didp7"]
 [ext_resource type="Script" uid="uid://dys2rqs8b43xo" path="res://Scripts/ItemData.gd" id="4_jgkgd"]
-[ext_resource type="PackedScene" uid="uid://bep7qvd27emfd" path="res://Scenes/player_two.tscn" id="4_lyd6k"]
 [ext_resource type="PackedScene" uid="uid://c8yjeir544gpm" path="res://Scenes/ItemSparkle.tscn" id="4_y4dr7"]
 [ext_resource type="PackedScene" uid="uid://dnyfmxgijbj0j" path="res://Scenes/puerta.tscn" id="5_y4dr7"]
 [ext_resource type="Texture2D" uid="uid://dtl2n0q42qqgu" path="res://Sprites/mantel.png" id="6_2a60c"]
@@ -13,9 +12,6 @@
 [ext_resource type="AudioStream" uid="uid://donnib1c2d3mk" path="res://Audio/musica_l_1.mp3" id="9_jgkgd"]
 [ext_resource type="Script" uid="uid://bgdfu04reghrc" path="res://Scenes/meta_escalera.gd" id="10_bs12r"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8im1s"]
-size = Vector2(387.5, 121)
-
 [sub_resource type="Resource" id="Resource_4iphx"]
 script = ExtResource("4_jgkgd")
 item_id = &"Mazo"
@@ -23,6 +19,9 @@ item_name = "Mazo"
 item_icon = ExtResource("3_didp7")
 item_type = 2
 metadata/_custom_type_script = "uid://dys2rqs8b43xo"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8im1s"]
+size = Vector2(387.5, 121)
 
 [node name="Level1" type="Node2D" unique_id=103695175]
 
@@ -50,7 +49,7 @@ fixed_item_icon = ExtResource("3_didp7")
 fixed_item_data = SubResource("Resource_4iphx")
 
 [node name="Skeleton" parent="." unique_id=1425578663 instance=ExtResource("3_c5erv")]
-position = Vector2(957, -183)
+position = Vector2(1056, -184)
 
 [node name="ItemSparkle" parent="." unique_id=1846050061 instance=ExtResource("4_y4dr7")]
 position = Vector2(1053, 257)
@@ -94,12 +93,6 @@ position = Vector2(-184, 258)
 [node name="ItemSparkle8" parent="." unique_id=1296947153 instance=ExtResource("4_y4dr7")]
 position = Vector2(-548, 458)
 
-[node name="Player_one" parent="." unique_id=30051457 instance=ExtResource("8_jgkgd")]
-position = Vector2(-779, 618)
-
-[node name="Player_two" parent="." unique_id=1197545596 instance=ExtResource("4_lyd6k")]
-position = Vector2(1062, 148)
-
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=354394062]
 stream = ExtResource("9_jgkgd")
 volume_db = -18.468
@@ -120,5 +113,15 @@ script = ExtResource("10_bs12r")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MetaEscalera" unique_id=226798198]
 position = Vector2(-800.75, 1018)
 shape = SubResource("RectangleShape2D_8im1s")
-[node name="Player_two" parent="." unique_id=1197545596 instance=ExtResource("4_lyd6k")]
-position = Vector2(1062, 148)
+
+[node name="Skeleton3" parent="." unique_id=2078534509 instance=ExtResource("3_c5erv")]
+position = Vector2(-493, 522)
+
+[node name="Skeleton4" parent="." unique_id=390025706 instance=ExtResource("3_c5erv")]
+position = Vector2(756, 715)
+
+[node name="Puerta2" parent="." unique_id=880153492 instance=ExtResource("5_y4dr7")]
+position = Vector2(1, 507)
+
+[node name="Player_one" parent="." unique_id=30051457 instance=ExtResource("8_jgkgd")]
+position = Vector2(-795, -526)

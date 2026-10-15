@@ -274,6 +274,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8w0r3"]
+radius = 12.0
 height = 52.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_efiyu"]
@@ -320,7 +321,9 @@ script = ExtResource("4_efiyu")
 [node name="HitboxPivot" type="Node2D" parent="." unique_id=2041996986]
 
 [node name="Area2D" type="Area2D" parent="HitboxPivot" unique_id=483868492]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxPivot/Area2D" unique_id=2116569696]
+visible = false
 position = Vector2(79, 106)
 shape = SubResource("CapsuleShape2D_cp0ka")
