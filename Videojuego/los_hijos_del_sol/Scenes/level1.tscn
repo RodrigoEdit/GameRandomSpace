@@ -9,6 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://bkrtwwdkty2q3" path="res://Scenes/UI/Hotbar.tscn" id="8_4iphx"]
 [ext_resource type="PackedScene" uid="uid://7jhrm466a8k5" path="res://Scenes/player_one.tscn" id="8_jgkgd"]
 [ext_resource type="AudioStream" uid="uid://donnib1c2d3mk" path="res://Audio/musica_l_1.mp3" id="9_jgkgd"]
+[ext_resource type="Script" uid="uid://bgdfu04reghrc" path="res://Scenes/meta_escalera.gd" id="10_bs12r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8im1s"]
+size = Vector2(387.5, 121)
 
 [node name="Level1" type="Node2D" unique_id=103695175]
 
@@ -80,9 +84,25 @@ position = Vector2(-184, 258)
 position = Vector2(-548, 458)
 
 [node name="Player_one" parent="." unique_id=30051457 instance=ExtResource("8_jgkgd")]
-position = Vector2(-830, -586)
+position = Vector2(-779, 618)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=354394062]
 stream = ExtResource("9_jgkgd")
 volume_db = -18.468
 autoplay = true
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=845417660]
+visible = false
+z_index = -1
+offset_left = -2741.0
+offset_top = -1840.0
+offset_right = 3004.0
+offset_bottom = 1775.0
+color = Color(0, 0, 0, 1)
+
+[node name="MetaEscalera" type="Area2D" parent="." unique_id=1302096919]
+script = ExtResource("10_bs12r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MetaEscalera" unique_id=226798198]
+position = Vector2(-800.75, 1018)
+shape = SubResource("RectangleShape2D_8im1s")
