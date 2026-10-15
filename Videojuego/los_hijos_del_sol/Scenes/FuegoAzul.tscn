@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://16n0ev7ate1w"]
+
+[ext_resource type="Script" uid="uid://kat3h2yfx6n2" path="res://Scenes/fuego_azul.gd" id="1_4xa67"]
+[ext_resource type="AudioStream" uid="uid://dmcbsk5cfdcv6" path="res://Audio/sfx-magic11.mp3" id="2_w0akp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5mbua"]
+radius = 2.0
+
+[node name="FuegoAzul" type="Area2D" unique_id=672890260]
+script = ExtResource("1_4xa67")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=90103159]
+shape = SubResource("CircleShape2D_5mbua")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=1412893339]
+amount = 20
+lifetime = 0.81
+gravity = Vector2(0, 10)
+scale_amount_min = 2.0
+scale_amount_max = 6.0
+color = Color(0.26036182, 0.54509807, 0.99999624, 1)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=146348402]
+stream = ExtResource("2_w0akp")
+volume_db = -6.0
+autoplay = true

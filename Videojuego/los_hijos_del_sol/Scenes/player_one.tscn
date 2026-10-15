@@ -2,6 +2,23 @@
 
 [ext_resource type="Script" uid="uid://dj5khtm2j7qcl" path="res://Scripts/player_one.gd" id="1_j3pwt"]
 [ext_resource type="Texture2D" uid="uid://cja8woqk5qmk" path="res://Sprites/julia.png" id="2_sbshm"]
+[ext_resource type="Texture2D" uid="uid://bb4ow6ny57suw" path="res://Sprites/attack_maria.png" id="2_vugtc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_66ief"]
+atlas = ExtResource("2_vugtc")
+region = Rect2(0, 0, 400, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ul284"]
+atlas = ExtResource("2_vugtc")
+region = Rect2(400, 0, 400, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1dsjp"]
+atlas = ExtResource("2_vugtc")
+region = Rect2(0, 200, 400, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3i0t"]
+atlas = ExtResource("2_vugtc")
+region = Rect2(400, 200, 400, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vugtc"]
 atlas = ExtResource("2_sbshm")
@@ -41,6 +58,23 @@ region = Rect2(665, 200, 133, 200)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_h7xjn"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_66ief")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ul284")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1dsjp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q3i0t")
+}],
+"loop": 1,
+"name": &"attack",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vugtc")
@@ -90,8 +124,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pewwp"]
-radius = 19.0
-height = 56.0
+radius = 14.0
+height = 28.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j3pwt"]
 bg_color = Color(0, 0.4509804, 0, 1)
@@ -103,10 +137,11 @@ metadata/_edit_horizontal_guides_ = [-97.0]
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1716592466]
 scale = Vector2(0.4699248, 0.47000003)
 sprite_frames = SubResource("SpriteFrames_h7xjn")
-animation = &"walk_up"
+animation = &"attack"
+frame_progress = 0.113865145
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1559960668]
-position = Vector2(1, 6)
+position = Vector2(-2, 31)
 shape = SubResource("CapsuleShape2D_pewwp")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=933708724]
