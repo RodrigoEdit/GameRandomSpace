@@ -4,6 +4,11 @@ extends CharacterBody2D
 @export var detection_range: float = 250.0
 @export var attack_range: float = 35.0
 
+# Sistema de vida y daño
+@export var max_health: int = 50
+@export var attack_damage: int = 15
+var current_health: int
+
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hitbox: Area2D = $Hitbox
 
@@ -12,8 +17,9 @@ var is_attacking: bool = false
 var is_dead: bool = false
 
 func _ready() -> void:
+	current_health = max_health
 	# Busca al jugador por su grupo
-	player = get_tree().get_first_node_in_group("player")
+	player = get_tree().get_first_node_in_group("player") as CharacterBody2D
 	hitbox.body_entered.connect(_on_hitbox_body_entered)
 
 func _physics_process(_delta: float) -> void:
@@ -49,15 +55,55 @@ func update_animation(dir: Vector2) -> void:
 	else:
 		anim.play("walk_down")
 
+# Orientación del sprite y de la Hitbox
+func _orient_side(is_left: bool) -> void:
+	anim.flip_h = is_left
+	# Desplaza la Hitbox al lado correspondiente (izquierda (-) o derecha (+))
+	hitbox.position.x = -abs(hitbox.position.x) if is_left else abs(hitbox.position.x)
+	
 func start_attack() -> void:
 	is_attacking = true
 	velocity = Vector2.ZERO
+	
+	# Calcular la posición X del jugador antes de atacar para elegir el lado correcto
+	if player:
+		var is_left = player.global_position.x < global_position.x
+		_orient_side(is_left)
+		
 	anim.play("attack")
 	
 	# Espera a que termine la animación del golpe
 	await anim.animation_finished
 	is_attacking = false
 
+# Recibir daño del ataque con el mazo del niño
+func take_damage(amount: int) -> void:
+	if is_dead:
+		return
+
+	current_health -= amount
+	print("Esqueleto recibió daño. Vida restante: ", current_health)
+
+	if current_health <= 0:
+		die()
+	else:
+		if anim.sprite_frames.has_animation("hurt"):
+			anim.play("hurt")
+
+func die() -> void:
+	is_dead = true
+	velocity = Vector2.ZERO
+
+	# Desactivar área de daño para no hacer daño muerto
+	if hitbox.has_node("CollisionShape2D"):
+		hitbox.get_node("CollisionShape2D").set_deferred("disabled", true)
+
+	if anim.sprite_frames.has_animation("death"):
+		anim.play("death")
+		await anim.animation_finished
+
+	queue_free()
+	
 # Si el jugador entra en contacto con el arma o cuerpo
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and not is_dead:

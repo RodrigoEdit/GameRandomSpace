@@ -1,14 +1,13 @@
-class_name Player                                            # CAMBIO 1
+class_name Player
 extends CharacterBody2D
 
-# NUEVO 2: señales que escucha la HUD
 signal health_changed(current: int, maximum: int)
 signal usage_progress_changed(ratio: float)
 signal equipment_changed(weapon: ItemData)
 signal attack_performed(weapon: ItemData)
 signal died
 
-enum State { UNARMED, EQUIPPED, USING_ITEM }                 # NUEVO
+enum State { UNARMED, EQUIPPED, USING_ITEM }
 
 @export var max_speed: float = 120.0
 @export var acceleration: float = 800.0
@@ -17,30 +16,49 @@ enum State { UNARMED, EQUIPPED, USING_ITEM }                 # NUEVO
 @export var max_health: int = 100
 var current_health: int
 
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var health_bar: ProgressBar = $HealthBar2
-@onready var health_label: Label = $HealthBar2/Label
-@onready var effects: StatusEffectManager = $StatusEffectManager   # CAMBIO 3
+# Nodos de la escena
+@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
+@onready var effects: StatusEffectManager = $StatusEffectManager
 
-var facing_direction: Vector2 = Vector2.DOWN
+# Nodos de Hitbox según la jerarquía de tu escena (HitboxPivot -> Area2D -> CollisionShape2D)
+@onready var hitbox_pivot: Node2D = $HitboxPivot
+@onready var attack_hitbox: Area2D = $HitboxPivot/Area2D
+@onready var attack_shape: CollisionShape2D = $HitboxPivot/Area2D/CollisionShape2D
 
-# NUEVO: estado de consumo y equipamiento
+var facing_sign: float = 1.0
+var current_dir_suffix: String = "down"
+
 var state: State = State.UNARMED
 var equipped_weapon: ItemData = null
 var _hotbar: HotbarManager = null
 var _usage_elapsed: float = 0.0
-var _must_release_use: bool = false  # evita consumir en bucle con la tecla mantenida
+var _must_release_use: bool = false
 var _attack_cooldown_left: float = 0.0
+
+var is_attacking: bool = false
+var is_dead: bool = false
 
 
 func _ready() -> void:
 	current_health = max_health
-	health_bar.max_value = max_health
-	actualizar_interfaz_vida()
-	_bind_hud.call_deferred()                                # NUEVO
+	state = State.UNARMED
+	equipped_weapon = null
+	
+	if attack_shape:
+		attack_shape.disabled = true
+		
+	if attack_hitbox:
+		attack_hitbox.body_entered.connect(_on_attack_hitbox_body_entered)
+	
+	if anim and anim.sprite_frames:
+		anim.sprite_frames.set_animation_loop("attack", false)
+	
+	# Inicia obligatoriamente en idle_down
+	_play_anim("idle_down")
+		
+	_bind_hud.call_deferred()
 
 
-# NUEVO: conecta con la HUD y la Hotbar (diferido: no importa el orden en el árbol)
 func _bind_hud() -> void:
 	var hud: PlayerHUD = get_tree().get_first_node_in_group("hud") as PlayerHUD
 	if hud == null:
@@ -53,11 +71,14 @@ func _bind_hud() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if is_dead or is_attacking:
+		return
+
 	var input_vector := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	var target_speed: float = max_speed * effects.get_speed_multiplier()   # CAMBIO 4
+	var target_speed: float = max_speed * effects.get_speed_multiplier()
 
 	if input_vector != Vector2.ZERO:
-		facing_direction = input_vector.normalized()
+		_update_direction_suffix(input_vector)
 		velocity = velocity.move_toward(input_vector * target_speed, acceleration * delta)
 		update_animation(true)
 	else:
@@ -67,11 +88,98 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-# CAMBIO 5: consumo con barra de carga
 func _process(delta: float) -> void:
 	if _attack_cooldown_left > 0.0:
 		_attack_cooldown_left -= delta
 	_process_usage(delta)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if is_dead:
+		return
+
+	if event.is_action_pressed("attack") and state == State.EQUIPPED and _attack_cooldown_left <= 0.0 and not is_attacking:
+		_perform_attack()
+		return
+
+	if OS.is_debug_build() and event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_K:
+			take_damage(20)
+		elif event.keycode == KEY_L:
+			heal(20)
+
+
+func _perform_attack() -> void:
+	is_attacking = true
+	velocity = Vector2.ZERO
+	_attack_cooldown_left = equipped_weapon.attack_cooldown if equipped_weapon else 0.5
+	attack_performed.emit(equipped_weapon)
+	
+	_update_flip()
+	_play_anim("attack")
+
+	if attack_shape:
+		attack_shape.disabled = false
+
+	if anim:
+		await anim.animation_finished
+
+	if attack_shape:
+		attack_shape.disabled = true
+	is_attacking = false
+	
+	update_animation(velocity != Vector2.ZERO)
+
+
+# Determina la dirección actual y gestiona la orientación lateral
+func _update_direction_suffix(input_vector: Vector2) -> void:
+	if abs(input_vector.x) > abs(input_vector.y):
+		if input_vector.x > 0:
+			current_dir_suffix = "rigth" # Respeta el nombre de tu animación en el editor
+			facing_sign = 1.0
+		else:
+			current_dir_suffix = "left"
+			facing_sign = -1.0
+	else:
+		if input_vector.y > 0:
+			current_dir_suffix = "down"
+		else:
+			current_dir_suffix = "up"
+
+	# Orientación de la Hitbox según hacia dónde mira
+	if hitbox_pivot:
+		hitbox_pivot.scale.x = facing_sign
+
+
+# Actualiza las animaciones según estado (Desarmado vs Con Mazo)
+func update_animation(is_moving: bool) -> void:
+	if is_attacking or is_dead:
+		return
+		
+	_update_flip()
+
+	if state == State.EQUIPPED:
+		# Estado con Arma/Mazo equipado
+		if is_moving:
+			_play_anim("walk_weapon")
+		else:
+			_play_anim("idle_weapon")
+	else:
+		# Estado Desarmado
+		if is_moving:
+			var anim_name := "walk_" + current_dir_suffix
+			if not _play_anim(anim_name):
+				_play_anim("walk_down")
+		else:
+			_play_anim("idle_down")
+
+
+func _play_anim(anim_name: String) -> bool:
+	if anim and anim.sprite_frames and anim.sprite_frames.has_animation(anim_name):
+		anim.play(anim_name)
+		return true
+	push_warning("Animación no encontrada: " + anim_name)
+	return false
 
 
 func _process_usage(delta: float) -> void:
@@ -79,7 +187,7 @@ func _process_usage(delta: float) -> void:
 
 	if not holding:
 		_must_release_use = false
-		_cancel_usage()  # soltar antes del 100 % cancela
+		_cancel_usage()
 		return
 
 	if _must_release_use or _hotbar == null:
@@ -128,9 +236,11 @@ func _apply_item_effect(item: ItemData) -> void:
 			effects.apply_shield(item.shield_hits, buff_icon)
 
 
-# NUEVO: equipar armas
 func _on_selected_item_changed(item: ItemData) -> void:
-	_cancel_usage()  # cambiar de slot interrumpe el consumo
+	print("SELECCIONADO: ", item)
+	if item:
+		print("  tipo: ", item.item_type, " | WEAPON es: ", ItemData.ItemType.WEAPON)
+	_cancel_usage()
 	if item != null and item.item_type == ItemData.ItemType.WEAPON:
 		equipped_weapon = item
 		state = State.EQUIPPED
@@ -141,54 +251,21 @@ func _on_selected_item_changed(item: ItemData) -> void:
 		equipped_weapon = null
 		equipment_changed.emit(null)
 
-
-# CAMBIO: tus pruebas K/L ahora conviven con el ataque
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("attack") and state == State.EQUIPPED and _attack_cooldown_left <= 0.0:
-		_perform_attack()
-		return
-
-	# Pruebas de daño y de dar vida (solo en builds de depuración)
-	if OS.is_debug_build() and event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_K:
-			take_damage(20)
-		elif event.keycode == KEY_L:
-			heal(20)
-
-
-func _perform_attack() -> void:
-	_attack_cooldown_left = equipped_weapon.attack_cooldown
-	attack_performed.emit(equipped_weapon)
-	print("Ataque con %s (daño %d)" % [equipped_weapon.item_name, equipped_weapon.weapon_damage])
-	# Aquí conectarás tu hitbox y tu animación de ataque.
-
-
-func update_animation(is_moving: bool) -> void:
-	var dir_suffix := get_direction_suffix(facing_direction)
-	var prefix := "walk_" if is_moving else "idle_"
-	var anim_name := prefix + dir_suffix
-
-	if animation_player and animation_player.has_animation(anim_name):
-		animation_player.play(anim_name)
-
-
-func get_direction_suffix(dir: Vector2) -> String:
-	if abs(dir.x) > abs(dir.y):
-		return "right" if dir.x > 0 else "left"
-	else:
-		return "down" if dir.y > 0 else "up"
+	update_animation(velocity != Vector2.ZERO)
 
 
 func actualizar_interfaz_vida() -> void:
-	health_bar.value = current_health
-	health_label.text = str(current_health) + " / " + str(max_health)
-	health_changed.emit(current_health, max_health)          # CAMBIO 6: avisa a la HUD
+	health_changed.emit(current_health, max_health)
 
 
 func take_damage(amount: int) -> void:
-	if effects.absorb_hit():                                 # CAMBIO 6: el escudo absorbe 1 impacto
+	if is_dead:
 		return
-	_cancel_usage()                                          # recibir daño interrumpe el consumo
+		
+	if effects and effects.absorb_hit():
+		return
+		
+	_cancel_usage()
 	current_health = clampi(current_health - amount, 0, max_health)
 	actualizar_interfaz_vida()
 
@@ -197,10 +274,34 @@ func take_damage(amount: int) -> void:
 
 
 func heal(amount: int) -> void:
+	if is_dead:
+		return
 	current_health = clampi(current_health + amount, 0, max_health)
 	actualizar_interfaz_vida()
 
 
 func die() -> void:
+	if is_dead:
+		return
+	is_dead = true
+	velocity = Vector2.ZERO
 	died.emit()
-	queue_free()
+
+	if $CollisionShape2D:
+		$CollisionShape2D.set_deferred("disabled", true)
+
+
+func _on_attack_hitbox_body_entered(body: Node2D) -> void:
+	if body == self:
+		return
+	if body.has_method("take_damage"):
+		var damage: int = equipped_weapon.weapon_damage if equipped_weapon else 10
+		body.take_damage(damage)
+		
+func _update_flip() -> void:
+	if not anim:
+		return
+	if state == State.EQUIPPED or is_attacking:
+		anim.flip_h = facing_sign < 0.0
+	else:
+		anim.flip_h = false
