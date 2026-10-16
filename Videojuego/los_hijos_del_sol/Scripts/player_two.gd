@@ -89,6 +89,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _process(delta: float) -> void:
+	if is_dead:
+		return
 	if _attack_cooldown_left > 0.0:
 		_attack_cooldown_left -= delta
 	_process_usage(delta)
@@ -285,11 +287,17 @@ func die() -> void:
 		return
 	is_dead = true
 	velocity = Vector2.ZERO
-	died.emit()
-
+	_cancel_usage()
+	
+	if attack_shape:
+		attack_shape.set_deferred("disabled", true)
 	if $CollisionShape2D:
 		$CollisionShape2D.set_deferred("disabled", true)
-
+	
+	if _play_anim("death"):
+		await anim.animation_finished
+	
+	died.emit()
 
 func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	if body == self:

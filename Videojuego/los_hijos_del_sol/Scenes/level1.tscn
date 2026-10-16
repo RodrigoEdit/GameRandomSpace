@@ -99,7 +99,6 @@ volume_db = -18.468
 autoplay = true
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=845417660]
-visible = false
 z_index = -1
 offset_left = -2741.0
 offset_top = -1840.0
@@ -124,4 +123,4 @@ position = Vector2(756, 715)
 position = Vector2(1, 507)
 
 [node name="Player_one" parent="." unique_id=30051457 instance=ExtResource("8_jgkgd")]
-position = Vector2(-795, -526)
+position = Vector2(-826, -511)

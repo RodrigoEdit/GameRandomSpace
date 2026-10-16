@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://cie28t1csn1wt"]
+
+[ext_resource type="Script" uid="uid://blpq46h11h74f" path="res://scripts/player.gd" id="1_8p05u"]
+[ext_resource type="Texture2D" uid="uid://bdj6jnylhj65b" path="res://icon.svg" id="2_eo61r"]
+[ext_resource type="Script" uid="uid://bhmdrw1aowat" path="res://scripts/camera_2d.gd" id="3_mxepk"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4mmox"]
+animations = [{
+"frames": [],
+"loop": 0,
+"name": &"dash",
+"speed": 16.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"fall",
+"speed": 10.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [],
+"loop": 0,
+"name": &"jump",
+"speed": 10.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"run",
+"speed": 12.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"wall_slide",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8p05u"]
+size = Vector2(129, 128)
+
+[sub_resource type="Animation" id="Animation_mxepk"]
+resource_name = "land_squash"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e41v5"]
+_data = {
+&"land_squash": SubResource("Animation_mxepk")
+}
+
+[node name="Player" type="CharacterBody2D" unique_id=1619413284 groups=["GrupoPlayer"]]
+script = ExtResource("1_8p05u")
+
+[node name="Visuals" type="Node2D" parent="." unique_id=2026256188]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Visuals" unique_id=703570610]
+sprite_frames = SubResource("SpriteFrames_4mmox")
+animation = &"jump"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=468838635]
+texture = ExtResource("2_eo61r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=858082747]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_8p05u")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=212474648]
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+script = ExtResource("3_mxepk")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1467365834]
+libraries/ = SubResource("AnimationLibrary_e41v5")
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=507549249]

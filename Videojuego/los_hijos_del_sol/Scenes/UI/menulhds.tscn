@@ -61,10 +61,10 @@ offset_bottom = 40.0
 
 [node name="BtnPlay" type="Button" parent="ButtonsGroup" unique_id=1822787993]
 layout_mode = 0
-offset_left = 815.0
-offset_top = 495.0
-offset_right = 1114.0
-offset_bottom = 587.0
+offset_left = 530.0
+offset_top = 330.0
+offset_right = 751.0
+offset_bottom = 392.0
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_ibiwo")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_upmly")
@@ -73,10 +73,10 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_5icse")
 
 [node name="BtnOptions" type="Button" parent="ButtonsGroup" unique_id=1997113845]
 layout_mode = 0
-offset_left = 807.0
-offset_top = 612.0
-offset_right = 1115.0
-offset_bottom = 702.0
+offset_left = 543.0
+offset_top = 437.0
+offset_right = 736.0
+offset_bottom = 484.0
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_wiexs")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_41ei5")
@@ -85,10 +85,10 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_blqmq")
 
 [node name="BtnCredits" type="Button" parent="ButtonsGroup" unique_id=600724757]
 layout_mode = 0
-offset_left = 805.0
-offset_top = 725.0
-offset_right = 1114.0
-offset_bottom = 815.0
+offset_left = 552.0
+offset_top = 530.0
+offset_right = 748.0
+offset_bottom = 581.0
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_7pykw")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_70o3i")
@@ -97,10 +97,10 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_a831j")
 
 [node name="BtnQuit" type="Button" parent="ButtonsGroup" unique_id=976986949]
 layout_mode = 0
-offset_left = 810.0
-offset_top = 834.0
-offset_right = 1114.0
-offset_bottom = 935.0
+offset_left = 568.0
+offset_top = 628.0
+offset_right = 737.0
+offset_bottom = 690.0
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_v543c")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_a6854")
@@ -113,6 +113,7 @@ volume_db = 5.832
 autoplay = true
 
 [node name="FadeOverlay" type="ColorRect" parent="." unique_id=1386207535]
+visible = false
 modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 15

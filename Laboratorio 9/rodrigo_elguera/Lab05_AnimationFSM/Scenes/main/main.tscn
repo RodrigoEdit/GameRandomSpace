@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://cffdswxidsyci"]
+
+[ext_resource type="Script" uid="uid://bpmrip0ilkqtr" path="res://scripts/main.gd" id="1_4etoo"]
+[ext_resource type="PackedScene" uid="uid://bwwdmg2np2c6h" path="res://Scenes/collectibles/collectible.tscn" id="1_w1fgp"]
+[ext_resource type="PackedScene" uid="uid://cie28t1csn1wt" path="res://Scenes/player/player.tscn" id="2_4etoo"]
+
+[node name="Main" type="Node2D" unique_id=1613556953]
+script = ExtResource("1_4etoo")
+
+[node name="Collectible7" parent="." unique_id=1127669181 instance=ExtResource("1_w1fgp")]
+position = Vector2(513, 415)
+
+[node name="Collectible2" parent="." unique_id=1917142523 instance=ExtResource("1_w1fgp")]
+position = Vector2(85, 31)
+
+[node name="Player" parent="." unique_id=1619413284 instance=ExtResource("2_4etoo")]
+position = Vector2(264, 301)
+
+[node name="Collectible" parent="." unique_id=1912168683 instance=ExtResource("1_w1fgp")]
+position = Vector2(179, 133)
+
+[node name="Collectible3" parent="." unique_id=2105165543 instance=ExtResource("1_w1fgp")]
+position = Vector2(63, 180)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1661321585]
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer" unique_id=187133538]
+offset_left = 347.0
+offset_top = 13.0
+offset_right = 419.0
+offset_bottom = 36.0
+text = "Puntos: 0"
+
+[node name="Collectible4" parent="." unique_id=136887052 instance=ExtResource("1_w1fgp")]
+position = Vector2(647, 204)
+
+[node name="Collectible5" parent="." unique_id=1512246813 instance=ExtResource("1_w1fgp")]
+position = Vector2(416, 156)
+
+[node name="Collectible6" parent="." unique_id=1958051957 instance=ExtResource("1_w1fgp")]
+position = Vector2(147, 423)
