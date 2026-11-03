@@ -367,7 +367,7 @@ properties/2/replication_mode = 1
 [node name="Player_two" type="CharacterBody2D" unique_id=1197545596 groups=["player"]]
 script = ExtResource("1_p8sfr")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=573338064]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=573338064 groups=["player"]]
 position = Vector2(5, -52)
 sprite_frames = SubResource("SpriteFrames_8w0r3")
 animation = &"death"
