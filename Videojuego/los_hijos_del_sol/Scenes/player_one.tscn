@@ -171,5 +171,5 @@ layout_mode = 0
 offset_right = 59.0
 offset_bottom = 23.0
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=623036910]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=623036910 groups=["player"]]
 replication_config = SubResource("SceneReplicationConfig_sbshm")

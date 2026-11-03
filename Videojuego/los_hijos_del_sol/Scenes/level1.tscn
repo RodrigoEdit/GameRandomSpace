@@ -162,9 +162,10 @@ theme_override_colors/font_color = Color(0.85240334, 0.8635549, 1, 1)
 text = "Unirse por IP"
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=471789652]
+_spawnable_scenes = PackedStringArray("uid://7jhrm466a8k5", "uid://bep7qvd27emfd")
 spawn_path = NodePath("../spawn")
 
 [node name="spawn" type="Sprite2D" parent="." unique_id=214032858]
-position = Vector2(-826.5, -519.5)
-scale = Vector2(1.1562495, 1.1562514)
+position = Vector2(-831.5, -514)
+scale = Vector2(0.84375066, 0.8125008)
 texture = ExtResource("12_cpkqv")

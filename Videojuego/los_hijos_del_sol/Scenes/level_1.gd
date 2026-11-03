@@ -2,7 +2,7 @@ extends Node2D
 
 const PORT: int = 7000
 
-# 1. Cargamos las dos escenas por separado
+# Cargamos las escenas por separado
 const PLAYER_ONE_SCENE = preload("res://Scenes/player_one.tscn")
 const PLAYER_TWO_SCENE = preload("res://Scenes/player_two.tscn")
 
@@ -23,13 +23,13 @@ func crear_servidor() -> void:
 	
 	multiplayer.multiplayer_peer = peer
 	
-	# Conexión y desconexión de clientes
+	# Eventos de red (solo el Host gestiona el ciclo de vida de los jugadores)
 	multiplayer.peer_connected.connect(spawning_player)
 	multiplayer.peer_disconnected.connect(eliminar_jugador)
 	
 	lobby_ui.hide()
 	
-	# El host siempre es el ID 1 (Player 1)
+	# Instanciar a María (Host = ID 1)
 	spawning_player(1)
 
 # Botón CLIENTE
@@ -48,7 +48,7 @@ func unirse_a_partida() -> void:
 	multiplayer.multiplayer_peer = peer
 	lobby_ui.hide()
 
-# Instanciar personajes en el Host (el MultiplayerSpawner los replica solo a las otras PCs)
+# Instanciar personaje (Solo corre en el Host)
 func spawning_player(id: int) -> void:
 	var player: Node2D
 	
@@ -57,20 +57,20 @@ func spawning_player(id: int) -> void:
 	else:
 		player = PLAYER_TWO_SCENE.instantiate()
 		
-	# 1. Asignar el nombre obligatorio para la red
+	# 1. Asignar el ID como nombre de nodo antes de entrar al árbol
 	player.name = str(id)
 	
-	# 2. PRIMERO se añade al árbol
-	$spawn.add_child(player)
+	# 2. Agregar como hijo forzando que mantenga el nombre exacto
+	$spawn.add_child(player, true)
 	
-	# 3. DESPUÉS se le da la posición exacta
+	# 3. Asignar posición
 	if id == 1:
 		player.global_position = $spawn.global_position
 	else:
 		player.global_position = $spawn.global_position + Vector2(25, 0)
 
-# Si el compañero se desconecta o cierra la ventana
+# Cuando alguien se sale de la partida
 func eliminar_jugador(id: int) -> void:
-	var player = get_node_or_null(str(id))
+	var player = $spawn.get_node_or_null(str(id))
 	if player:
 		player.queue_free()
