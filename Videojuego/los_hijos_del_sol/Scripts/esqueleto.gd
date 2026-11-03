@@ -12,12 +12,24 @@ var current_health: int
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hitbox: Area2D = $Hitbox
 @onready var hitbox_collision: CollisionShape2D = $Hitbox/CollisionShape2D
+@onready var camera: Camera2D = $Camera2D
 
 var player: CharacterBody2D = null
 var is_attacking: bool = false
 var is_dead: bool = false
 
+func _enter_tree() -> void:
+	# Asigna la autoridad según el número de ID que tiene el nodo
+	set_multiplayer_authority(name.to_int())
+	
 func _ready() -> void:
+	if not is_multiplayer_authority():
+		return
+		
+	if camera:
+		camera.enabled = is_multiplayer_authority()
+		if is_multiplayer_authority():
+			camera.make_current()
 	current_health = max_health
 	player = get_tree().get_first_node_in_group("player") as CharacterBody2D
 	hitbox.body_entered.connect(_on_hitbox_body_entered)

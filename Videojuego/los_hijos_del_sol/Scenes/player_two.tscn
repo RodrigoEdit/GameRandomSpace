@@ -410,5 +410,5 @@ visible = false
 position = Vector2(79, 106)
 shape = SubResource("CapsuleShape2D_cp0ka")
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=473290201]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=473290201 groups=["player"]]
 replication_config = SubResource("SceneReplicationConfig_5yqub")
