@@ -27,9 +27,15 @@ func _ready() -> void:
 		hitbox_collision.disabled = true
 
 func _physics_process(_delta: float) -> void:
-	if is_dead or is_attacking or player == null:
+	if is_dead or is_attacking:
 		return
-
+		
+	# Si todavía no tiene asignado un jugador, lo busca
+	if player == null:
+		player = get_tree().get_first_node_in_group("player") as CharacterBody2D
+		if player == null:
+			return # Sigue esperando si aún no se ha creado el personaje
+		
 	var distance_to_player = global_position.distance_to(player.global_position)
 
 	# Si el jugador está dentro de su rango de visión

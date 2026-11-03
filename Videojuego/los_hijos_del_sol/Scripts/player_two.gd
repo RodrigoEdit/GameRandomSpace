@@ -6,7 +6,7 @@ signal usage_progress_changed(ratio: float)
 signal equipment_changed(weapon: ItemData)
 signal attack_performed(weapon: ItemData)
 signal died
-
+@onready var camera: Camera2D = $Camera2D
 enum State { UNARMED, EQUIPPED, USING_ITEM }
 
 @export var max_speed: float = 120.0
@@ -38,8 +38,12 @@ var _attack_cooldown_left: float = 0.0
 var is_attacking: bool = false
 var is_dead: bool = false
 
-
+func _enter_tree() -> void:
+	set_multiplayer_authority(name.to_int())
+	
 func _ready() -> void:
+	if camera:
+		camera.enabled = is_multiplayer_authority()
 	current_health = max_health
 	state = State.UNARMED
 	equipped_weapon = null
@@ -71,6 +75,8 @@ func _bind_hud() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if not is_multiplayer_authority():
+		return
 	if is_dead or is_attacking:
 		return
 

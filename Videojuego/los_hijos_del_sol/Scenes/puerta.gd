@@ -6,7 +6,7 @@ var jugador_cerca: bool = false
 
 @onready var label: Label = $Label
 @onready var colision_fisica: CollisionShape2D = $CollisionShape2D
-@onready var color_rect: ColorRect = $ColorRect
+#@onready var color_rect: ColorRect = $ColorRect
 
 func _ready() -> void:
 	label.visible = false
@@ -50,5 +50,5 @@ func mostrar_mensaje(texto: String) -> void:
 
 func abrir_puerta() -> void:
 	colision_fisica.set_deferred("disabled", true)
-	color_rect.visible = false
+	#color_rect.visible = false
 	label.visible = false
