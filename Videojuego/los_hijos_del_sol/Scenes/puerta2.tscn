@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cuihkdytdy4x1"]
+
+[ext_resource type="Script" uid="uid://crmk8005q7uye" path="res://Scripts/puerta.gd" id="1_wfcm2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8w0r3"]
+size = Vector2(188, 99.5)
+
+[node name="Puerta" type="StaticBody2D" unique_id=545673791]
+script = ExtResource("1_wfcm2")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1806094155]
+offset_right = 187.0
+offset_bottom = 97.0
+color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=443607134]
+position = Vector2(93, 48.25)
+shape = SubResource("RectangleShape2D_8w0r3")

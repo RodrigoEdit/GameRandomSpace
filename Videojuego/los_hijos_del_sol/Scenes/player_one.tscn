@@ -142,6 +142,7 @@ properties/2/spawn = true
 properties/2/replication_mode = 1
 
 [node name="Player_one" type="CharacterBody2D" unique_id=30051457 groups=["player"]]
+z_index = 10
 script = ExtResource("1_j3pwt")
 metadata/_edit_horizontal_guides_ = [-97.0]
 

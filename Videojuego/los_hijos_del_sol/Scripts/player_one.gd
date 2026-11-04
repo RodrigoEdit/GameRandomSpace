@@ -42,6 +42,16 @@ func _physics_process(_delta: float) -> void:
 
 	velocity = input_dir * speed
 	move_and_slide()
+	
+	# Detecta colisiones tras mover al personaje
+	for i in get_slide_collision_count():
+		var colision = get_slide_collision(i)
+		var objeto = colision.get_collider()
+		
+		# Si choca contra una caja (RigidBody2D), le aplica fuerza para empujarla
+		if objeto is RigidBody2D:
+			objeto.apply_central_impulse(-colision.get_normal() * 150.0)
+			
 	actualizar_animacion(input_dir)
 
 # Pruebas de daño, vida y tecla extra de ataque (K)

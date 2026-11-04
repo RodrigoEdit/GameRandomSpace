@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://0xur50u48u8w"]
+
+[ext_resource type="Script" uid="uid://ci5h4kjxve4m" path="res://Scripts/placa.gd" id="1_edy4g"]
+[ext_resource type="Texture2D" uid="uid://cchftmx7nb754" path="res://Sprites/placa_sol.png" id="2_edy4g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8w0r3"]
+size = Vector2(40, 43)
+
+[node name="Placa" type="Area2D" unique_id=112323875 groups=["placas"]]
+script = ExtResource("1_edy4g")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=670901611]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_edy4g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=320108328]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_8w0r3")
