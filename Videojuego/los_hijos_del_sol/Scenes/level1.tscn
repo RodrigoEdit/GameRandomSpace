@@ -104,10 +104,10 @@ autoplay = true
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=845417660]
 z_index = -1
-offset_left = -2708.0
-offset_top = -1811.0
-offset_right = 3037.0
-offset_bottom = 1804.0
+offset_left = -2726.0
+offset_top = -1912.0
+offset_right = 3019.0
+offset_bottom = 1703.0
 color = Color(0, 0, 0, 1)
 
 [node name="MetaEscalera" type="Area2D" parent="." unique_id=1302096919]
