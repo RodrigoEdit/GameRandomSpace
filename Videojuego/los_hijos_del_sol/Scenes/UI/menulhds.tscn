@@ -1,124 +1,308 @@
 [gd_scene format=3 uid="uid://hbg178o1baue"]
 
-[ext_resource type="Texture2D" uid="uid://bwawtq2jmlvwc" path="res://Sprites/menu_lhds.png" id="1_4ty7h"]
-[ext_resource type="Script" uid="uid://kgrw8jk8n2c" path="res://Scripts/UI/main_menu.gd" id="1_8kepm"]
-[ext_resource type="AudioStream" uid="uid://ce6rmrr34crh6" path="res://Audio/Koi-discovery - Atlas_Shoulders.mp3.mp3" id="3_rsv8s"]
+[ext_resource type="Texture2D" uid="uid://bwu0rxabmoocm" path="res://Sprites/menu.png" id="2_rsv8s"]
+[ext_resource type="Script" uid="uid://kgrw8jk8n2c" path="res://Scripts/UI/main_menu.gd" id="2_script"]
+[ext_resource type="AudioStream" uid="uid://ce6rmrr34crh6" path="res://Audio/Koi-discovery - Atlas_Shoulders.mp3.mp3" id="3_music"]
+[ext_resource type="FontFile" uid="uid://b65mhiv5tlegh" path="res://Font/pixel.ttf" id="4_font"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ibiwo"]
+[sub_resource type="StyleBoxFlat" id="Panel_menu"]
+bg_color = Color(0.035, 0.055, 0.09, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.84, 0.63, 0.22, 0.8)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_size = 18
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_upmly"]
+[sub_resource type="StyleBoxFlat" id="Button_normal"]
+bg_color = Color(0.07, 0.1, 0.15, 0.82)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.45, 0.5, 0.56, 0.55)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o7q0r"]
+[sub_resource type="StyleBoxFlat" id="Button_pressed"]
+bg_color = Color(0.55, 0.34, 0.08, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.88, 0.45, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5icse"]
+[sub_resource type="StyleBoxFlat" id="Button_hover"]
+bg_color = Color(0.78, 0.54, 0.16, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.88, 0.45, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wiexs"]
+[sub_resource type="StyleBoxFlat" id="Button_disabled"]
+bg_color = Color(0.08, 0.09, 0.11, 0.55)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_41ei5"]
+[sub_resource type="StyleBoxFlat" id="Button_focus"]
+bg_color = Color(0.12, 0.16, 0.22, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.88, 0.45, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8ajaj"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_blqmq"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7pykw"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_70o3i"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cxxxw"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a831j"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v543c"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a6854"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_722lq"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_typ83"]
-
-[node name="MainMenu" type="Control" unique_id=159042218]
+[node name="MainMenu" type="Control" unique_id=278901553]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_8kepm")
+script = ExtResource("2_script")
 
-[node name="Background" type="TextureRect" parent="." unique_id=906132161]
+[node name="Background" type="TextureRect" parent="." unique_id=1162844410]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_4ty7h")
+mouse_filter = 2
+texture = ExtResource("2_rsv8s")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="ButtonsGroup" type="Control" parent="." unique_id=2004919040]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="BtnPlay" type="Button" parent="ButtonsGroup" unique_id=1822787993]
-layout_mode = 0
-offset_left = 530.0
-offset_top = 330.0
-offset_right = 751.0
-offset_bottom = 392.0
-mouse_default_cursor_shape = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_ibiwo")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_upmly")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_o7q0r")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_5icse")
-
-[node name="BtnOptions" type="Button" parent="ButtonsGroup" unique_id=1997113845]
-layout_mode = 0
-offset_left = 543.0
-offset_top = 437.0
-offset_right = 736.0
-offset_bottom = 484.0
-mouse_default_cursor_shape = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_wiexs")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_41ei5")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_8ajaj")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_blqmq")
-
-[node name="BtnCredits" type="Button" parent="ButtonsGroup" unique_id=600724757]
-layout_mode = 0
-offset_left = 552.0
-offset_top = 530.0
-offset_right = 748.0
-offset_bottom = 581.0
-mouse_default_cursor_shape = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_7pykw")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_70o3i")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_cxxxw")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_a831j")
-
-[node name="BtnQuit" type="Button" parent="ButtonsGroup" unique_id=976986949]
-layout_mode = 0
-offset_left = 568.0
-offset_top = 628.0
-offset_right = 737.0
-offset_bottom = 690.0
-mouse_default_cursor_shape = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_v543c")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_a6854")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_722lq")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_typ83")
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=306194556]
-stream = ExtResource("3_rsv8s")
-volume_db = 5.832
-autoplay = true
-
-[node name="FadeOverlay" type="ColorRect" parent="." unique_id=1386207535]
-visible = false
-modulate = Color(0, 0, 0, 1)
+[node name="Shade" type="ColorRect" parent="." unique_id=1142493914]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+color = Color(0.015, 0.025, 0.055, 0.34)
+
+[node name="LeftGlow" type="ColorRect" parent="." unique_id=208159647]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.58
+anchor_bottom = 1.0
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.02, 0.025, 0.05, 0.28)
+
+[node name="TitleBlock" type="VBoxContainer" parent="." unique_id=899542626]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.07
+anchor_top = 0.1
+anchor_right = 0.55
+anchor_bottom = 0.32
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Eyebrow" type="Label" parent="TitleBlock" unique_id=625510676]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.78, 0.35, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 18
+text = "UNA AVENTURA EN LOS ANDES"
+
+[node name="Title" type="Label" parent="TitleBlock" unique_id=1769561602]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.72, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.7)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 42
+text = "LOS HIJOS
+DEL SOL"
+
+[node name="Subtitle" type="Label" parent="TitleBlock" unique_id=963066355]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.82, 0.88, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 16
+text = "El destino despierta bajo la montaña"
+
+[node name="ButtonsGroup" type="Control" parent="." unique_id=1264818220]
+layout_mode = 1
+anchor_left = 0.61
+anchor_top = 0.2
+anchor_right = 0.93
+anchor_bottom = 0.83
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuPanel" type="Panel" parent="ButtonsGroup" unique_id=817114823]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Panel_menu")
+
+[node name="MenuCaption" type="Label" parent="ButtonsGroup" unique_id=1980171497]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.12
+anchor_top = 0.08
+anchor_right = 0.88
+anchor_bottom = 0.16
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.95, 0.78, 0.35, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 16
+text = "MENÚ PRINCIPAL"
+horizontal_alignment = 1
+
+[node name="BtnPlay" type="Button" parent="ButtonsGroup" unique_id=1973573956]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.25
+anchor_right = 0.9
+anchor_bottom = 0.39
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_hover_color = Color(0.12, 0.08, 0.02, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("Button_normal")
+theme_override_styles/pressed = SubResource("Button_pressed")
+theme_override_styles/hover = SubResource("Button_hover")
+theme_override_styles/disabled = SubResource("Button_disabled")
+theme_override_styles/focus = SubResource("Button_focus")
+text = "JUGAR"
+
+[node name="BtnOptions" type="Button" parent="ButtonsGroup" unique_id=1419752566]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.44
+anchor_right = 0.9
+anchor_bottom = 0.58
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("Button_normal")
+theme_override_styles/pressed = SubResource("Button_pressed")
+theme_override_styles/hover = SubResource("Button_hover")
+theme_override_styles/disabled = SubResource("Button_disabled")
+theme_override_styles/focus = SubResource("Button_focus")
+text = "OPCIONES"
+
+[node name="BtnCredits" type="Button" parent="ButtonsGroup" unique_id=1205114207]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.63
+anchor_right = 0.9
+anchor_bottom = 0.77
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("Button_normal")
+theme_override_styles/pressed = SubResource("Button_pressed")
+theme_override_styles/hover = SubResource("Button_hover")
+theme_override_styles/disabled = SubResource("Button_disabled")
+theme_override_styles/focus = SubResource("Button_focus")
+text = "CRÉDITOS"
+
+[node name="BtnQuit" type="Button" parent="ButtonsGroup" unique_id=697504667]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.82
+anchor_right = 0.9
+anchor_bottom = 0.96
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 0.75, 0.7, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("Button_normal")
+theme_override_styles/pressed = SubResource("Button_pressed")
+theme_override_styles/hover = SubResource("Button_hover")
+theme_override_styles/disabled = SubResource("Button_disabled")
+theme_override_styles/focus = SubResource("Button_focus")
+text = "SALIR"
+
+[node name="Footer" type="Label" parent="." unique_id=1592184377]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.07
+anchor_top = 0.93
+anchor_right = 0.55
+anchor_bottom = 0.98
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.7, 0.74, 0.8, 0.8)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 13
+text = "WASD / FLECHAS  •  E INTERACTUAR  •  ESPACIO / ATACAR"
+
+[node name="Version" type="Label" parent="." unique_id=786854127]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -130.0
+offset_top = -34.0
+offset_right = -24.0
+offset_bottom = -14.0
+theme_override_colors/font_color = Color(0.7, 0.74, 0.8, 0.7)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 12
+text = "ALPHA 0.1"
+horizontal_alignment = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=281166193]
+stream = ExtResource("3_music")
+volume_db = -18.0
+
+[node name="FadeOverlay" type="ColorRect" parent="." unique_id=1212745975]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 1)

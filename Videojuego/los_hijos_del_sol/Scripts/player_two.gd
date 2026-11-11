@@ -321,6 +321,11 @@ func die() -> void:
 		await anim.animation_finished
 	
 	died.emit()
+	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
+		return
+	var nivel := get_tree().current_scene
+	if nivel.has_method("respawn_player"):
+		nivel.call_deferred("respawn_player", name.to_int())
 
 func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	if body == self:

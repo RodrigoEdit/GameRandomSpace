@@ -89,6 +89,8 @@ func cambiar_a_nivel_2() -> void:
 
 # Instanciar personaje (Solo corre en el Host)
 func spawning_player(id: int) -> void:
+	if $spawn.get_node_or_null(str(id)):
+		return
 	var player: Node2D
 	
 	if id == 1:
@@ -107,6 +109,17 @@ func spawning_player(id: int) -> void:
 		player.global_position = $spawn.global_position
 	else:
 		player.global_position = $spawn.global_position + Vector2(25, 0)
+
+
+func respawn_player(id: int) -> void:
+	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
+		return
+	var viejo := $spawn.get_node_or_null(str(id))
+	if viejo:
+		viejo.queue_free()
+	await get_tree().create_timer(1.5).timeout
+	if is_inside_tree():
+		spawning_player(id)
 
 # Cuando alguien se sale de la partida
 func eliminar_jugador(id: int) -> void:

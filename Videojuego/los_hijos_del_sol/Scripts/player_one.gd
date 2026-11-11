@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal died
+
 @export var speed: float = 140.0
 @export var max_health: int = 100
 @export var escena_fuego: PackedScene = preload("res://Scenes/FuegoAzul.tscn")
@@ -136,4 +138,11 @@ func heal(amount: int) -> void:
 	actualizar_interfaz_vida()
 
 func die() -> void:
-	queue_free()
+	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
+		return
+	visible = false
+	$CollisionShape2D.set_deferred("disabled", true)
+	died.emit()
+	var nivel := get_tree().current_scene
+	if nivel.has_method("respawn_player"):
+		nivel.call_deferred("respawn_player", name.to_int())
