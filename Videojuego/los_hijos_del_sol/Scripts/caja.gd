@@ -19,15 +19,23 @@ const TEXTURAS = {
 # NUEVO: Sonido de arrastre
 @onready var sonido: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
+func _enter_tree() -> void:
+	# El servidor es la única autoridad de la física de las cajas.
+	set_multiplayer_authority(1)
+
 func _ready() -> void:
 	actualizar_imagen()
+	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
+		# El cliente recibe posición/velocidad por MultiplayerSynchronizer;
+		# no debe simular otra física en paralelo.
+		freeze = true
 
 func actualizar_imagen() -> void:
 	if is_node_ready() and sprite_2d and id_caja in TEXTURAS:
 		sprite_2d.texture = TEXTURAS[id_caja]
 
 
-@rpc("any_peer", "reliable")
+@rpc("any_peer", "unreliable")
 func empujar(impulso: Vector2) -> void:
 	# La física de las cajas la decide el servidor.
 	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
