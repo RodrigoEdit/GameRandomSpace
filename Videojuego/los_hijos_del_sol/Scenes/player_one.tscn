@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dj5khtm2j7qcl" path="res://Scripts/player_one.gd" id="1_j3pwt"]
 [ext_resource type="Texture2D" uid="uid://cja8woqk5qmk" path="res://Sprites/julia.png" id="2_sbshm"]
 [ext_resource type="Texture2D" uid="uid://bb4ow6ny57suw" path="res://Sprites/attack_maria.png" id="2_vugtc"]
+[ext_resource type="AudioStream" path="res://Audio/pasos.mp3.mp3" id="3_pasos"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_66ief"]
 atlas = ExtResource("2_vugtc")
@@ -157,6 +158,11 @@ position = Vector2(-2, 31)
 shape = SubResource("CapsuleShape2D_pewwp")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=933708724]
+
+[node name="Pasos" type="AudioStreamPlayer2D" parent="." unique_id=933708725]
+stream = ExtResource("3_pasos")
+volume_db = -14.0
+max_distance = 500.0
 
 [node name="HealthBar" type="ProgressBar" parent="." unique_id=1927600444]
 offset_left = -29.0

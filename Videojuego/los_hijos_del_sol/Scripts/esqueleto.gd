@@ -28,6 +28,9 @@ func _ready() -> void:
 		hitbox_collision.disabled = true
 
 func _physics_process(_delta: float) -> void:
+	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
+		return
+
 	if is_dead or is_attacking:
 		return
 		
@@ -91,7 +94,11 @@ func start_attack() -> void:
 		
 	is_attacking = false
 
+@rpc("any_peer", "reliable")
 func take_damage(amount: int) -> void:
+	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
+		return
+
 	if is_dead:
 		return
 
@@ -120,7 +127,8 @@ func die() -> void:
 		anim.play("death")
 		await anim.animation_finished
 
-	queue_free()
+	hide()
+	set_physics_process(false)
 	
 # Cuando el ataque conecta con el jugador
 func _on_hitbox_body_entered(body: Node2D) -> void:

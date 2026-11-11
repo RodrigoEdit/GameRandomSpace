@@ -19,6 +19,7 @@ var current_health: int
 # Nodos de la escena
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var effects: StatusEffectManager = $StatusEffectManager
+@onready var pasos: AudioStreamPlayer2D = $Pasos
 
 # Nodos de Hitbox según la jerarquía de tu escena (HitboxPivot -> Area2D -> CollisionShape2D)
 @onready var hitbox_pivot: Node2D = $HitboxPivot
@@ -87,11 +88,27 @@ func _physics_process(delta: float) -> void:
 		_update_direction_suffix(input_vector)
 		velocity = velocity.move_toward(input_vector * target_speed, acceleration * delta)
 		update_animation(true)
+		if not pasos.playing:
+			pasos.play()
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
 		update_animation(false)
 
 	move_and_slide()
+
+	# Empujar cajas al chocar, igual que el jugador 1.
+	# El impulso se aplica solo desde la autoridad de este jugador.
+	for i in get_slide_collision_count():
+		var colision := get_slide_collision(i)
+		var objeto := colision.get_collider()
+		if objeto.has_method("empujar"):
+			var impulso := -colision.get_normal() * 150.0
+			if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
+				objeto.empujar.rpc_id(1, impulso)
+			else:
+				objeto.empujar(impulso)
+		elif objeto is RigidBody2D:
+			objeto.apply_central_impulse(-colision.get_normal() * 150.0)
 
 
 func _process(delta: float) -> void:
@@ -310,7 +327,10 @@ func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 		return
 	if body.has_method("take_damage"):
 		var damage: int = equipped_weapon.weapon_damage if equipped_weapon else 10
-		body.take_damage(damage)
+		if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
+			body.take_damage.rpc_id(1, damage)
+		else:
+			body.take_damage(damage)
 		
 func _update_flip() -> void:
 	if not anim:

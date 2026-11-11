@@ -11,6 +11,7 @@ var ultima_direccion_x: float = 1.0 # 1.0 = derecha, -1.0 = izquierda
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var health_bar: ProgressBar = $HealthBar
 @onready var health_label: Label = $HealthBar/Label
+@onready var pasos: AudioStreamPlayer2D = $Pasos
 
 func _enter_tree() -> void:
 	# El nombre del nodo será el ID único de la conexión
@@ -48,11 +49,19 @@ func _physics_process(_delta: float) -> void:
 		var colision = get_slide_collision(i)
 		var objeto = colision.get_collider()
 		
-		# Si choca contra una caja (RigidBody2D), le aplica fuerza para empujarla
-		if objeto is RigidBody2D:
+		# Las cajas reciben el impulso en el servidor.
+		if objeto.has_method("empujar"):
+			var impulso := -colision.get_normal() * 150.0
+			if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
+				objeto.empujar.rpc_id(1, impulso)
+			else:
+				objeto.empujar(impulso)
+		elif objeto is RigidBody2D:
 			objeto.apply_central_impulse(-colision.get_normal() * 150.0)
 			
 	actualizar_animacion(input_dir)
+	if input_dir != Vector2.ZERO and not pasos.playing:
+		pasos.play()
 
 # Pruebas de daño, vida y tecla extra de ataque (K)
 func _unhandled_input(event: InputEvent) -> void:

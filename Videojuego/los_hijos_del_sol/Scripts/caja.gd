@@ -27,6 +27,14 @@ func actualizar_imagen() -> void:
 		sprite_2d.texture = TEXTURAS[id_caja]
 
 
+@rpc("any_peer", "reliable")
+func empujar(impulso: Vector2) -> void:
+	# La física de las cajas la decide el servidor.
+	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
+		return
+	apply_central_impulse(impulso)
+
+
 # NUEVO: Detectar movimiento de la caja
 func _physics_process(_delta: float) -> void:
 	if linear_velocity.length() > 10.0:

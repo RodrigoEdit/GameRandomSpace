@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cdtjy2ve3werf" path="res://Sprites/wav.png" id="3_5yqub"]
 [ext_resource type="Texture2D" uid="uid://08q6rrxfq35q" path="res://Sprites/version_final.png" id="3_ytrmp"]
 [ext_resource type="Script" uid="uid://du3tf7g61jd2x" path="res://Scripts/UI/StatusEffectManager.gd" id="4_efiyu"]
+[ext_resource type="AudioStream" path="res://Audio/pasos.mp3.mp3" id="5_pasos"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5yqub"]
 atlas = ExtResource("2_x78of")
@@ -380,6 +381,11 @@ rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_8w0r3")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1133255050]
+
+[node name="Pasos" type="AudioStreamPlayer2D" parent="." unique_id=1133255051]
+stream = ExtResource("5_pasos")
+volume_db = -14.0
+max_distance = 500.0
 
 [node name="HealthBar2" type="ProgressBar" parent="." unique_id=123424229]
 visible = false
