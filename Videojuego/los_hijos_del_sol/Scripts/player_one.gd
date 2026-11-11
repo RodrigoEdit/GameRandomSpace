@@ -18,6 +18,8 @@ func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
 	
 func _ready() -> void:
+	# Cada ventana debe seguir únicamente a su jugador local.
+	$Camera2D.enabled = is_multiplayer_authority()
 	current_health = max_health
 	health_bar.max_value = max_health
 	actualizar_interfaz_vida()
