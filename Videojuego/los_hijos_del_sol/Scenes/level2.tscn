@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://0xur50u48u8w" path="res://Scenes/placa.tscn" id="5_styii"]
 [ext_resource type="Texture2D" uid="uid://buq4ggr5je28a" path="res://Sprites/escudo.png" id="6_lgosu"]
 [ext_resource type="PackedScene" uid="uid://cuihkdytdy4x1" path="res://Scenes/puerta2.tscn" id="6_styii"]
+[ext_resource type="PackedScene" uid="uid://bkrtwwdkty2q3" path="res://Scenes/UI/Hotbar.tscn" id="7_hud"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ckivy"]
 texture = ExtResource("1_cmmbj")
@@ -24929,6 +24930,8 @@ id_caja = "serpiente"
 
 [node name="Puerta" parent="." unique_id=545673791 instance=ExtResource("6_styii")]
 position = Vector2(-109, -658)
+
+[node name="PlayerHUD" parent="." unique_id=1898589744 instance=ExtResource("7_hud")]
 
 [node name="spawn" type="Sprite2D" parent="." unique_id=603468591]
 position = Vector2(-18, 858)

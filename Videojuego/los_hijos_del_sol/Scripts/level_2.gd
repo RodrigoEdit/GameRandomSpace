@@ -19,6 +19,13 @@ func _ready() -> void:
 		placa.placa_activada.connect(_on_placa_activada)
 		placa.placa_desactivada.connect(_on_placa_desactivada)
 
+	# No publicar cajas hasta que el cliente haya terminado de cargar Level2.
+	if multiplayer.has_multiplayer_peer() and multiplayer.is_server():
+		for caja in get_tree().get_nodes_in_group("cajas"):
+			var sincronizador := caja.get_node_or_null("MultiplayerSynchronizer") as MultiplayerSynchronizer
+			if sincronizador:
+				sincronizador.public_visibility = false
+
 	# Esperar a que todos los clientes tengan creado su Level2/MultiplayerSpawner.
 	if not multiplayer.has_multiplayer_peer():
 		spawning_player(1)
@@ -32,7 +39,12 @@ func _ready() -> void:
 func _nivel_listo() -> void:
 	if not multiplayer.is_server():
 		return
-	jugadores_listos[multiplayer.get_remote_sender_id()] = true
+	var peer_id := multiplayer.get_remote_sender_id()
+	jugadores_listos[peer_id] = true
+	for caja in get_tree().get_nodes_in_group("cajas"):
+		var sincronizador := caja.get_node_or_null("MultiplayerSynchronizer") as MultiplayerSynchronizer
+		if sincronizador:
+			sincronizador.set_visibility_for(peer_id, true)
 	_intentar_spawn()
 
 
