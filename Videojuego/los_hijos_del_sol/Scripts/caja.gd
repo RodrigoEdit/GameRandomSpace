@@ -9,6 +9,10 @@ const TEXTURAS = {
 	"serpiente": preload("res://Sprites/serpiente.png")
 }
 
+# Solo limita la aceleración hacia abajo. Las otras direcciones conservan
+# exactamente el comportamiento actual.
+const VELOCIDAD_MAXIMA_HACIA_ABAJO := 110.0
+
 @export var id_caja: String = "sol":
 	set(nuevo_valor):
 		id_caja = nuevo_valor.to_lower()
@@ -41,6 +45,8 @@ func empujar(impulso: Vector2) -> void:
 	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
 		return
 	apply_central_impulse(impulso)
+	if linear_velocity.y > VELOCIDAD_MAXIMA_HACIA_ABAJO:
+		linear_velocity.y = VELOCIDAD_MAXIMA_HACIA_ABAJO
 
 
 # NUEVO: Detectar movimiento de la caja

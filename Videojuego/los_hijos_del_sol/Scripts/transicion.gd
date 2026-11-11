@@ -1,10 +1,65 @@
 extends CanvasLayer
 
 var cambiando: bool = false
+var _final_overlay: Control = null
 
 
 func _ready() -> void:
 	layer = 120
+
+
+@rpc("authority", "call_local", "reliable")
+func finalizar_juego() -> void:
+	if _final_overlay != null:
+		return
+
+	_final_overlay = ColorRect.new()
+	_final_overlay.color = Color(0.015, 0.02, 0.06, 0.94)
+	_final_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_final_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(_final_overlay)
+
+	var centro := CenterContainer.new()
+	centro.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_final_overlay.add_child(centro)
+
+	var contenido := VBoxContainer.new()
+	contenido.add_theme_constant_override("separation", 18)
+	contenido.alignment = BoxContainer.ALIGNMENT_CENTER
+	centro.add_child(contenido)
+
+	var titulo := Label.new()
+	titulo.text = "¡JUEGO COMPLETADO!"
+	titulo.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	titulo.add_theme_font_size_override("font_size", 48)
+	contenido.add_child(titulo)
+
+	var subtitulo := Label.new()
+	subtitulo.text = "Los Hijos del Sol"
+	subtitulo.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	subtitulo.add_theme_font_size_override("font_size", 24)
+	contenido.add_child(subtitulo)
+
+	var volver := Button.new()
+	volver.text = "Volver al menú"
+	volver.custom_minimum_size = Vector2(220, 48)
+	volver.pressed.connect(_volver_al_menu)
+	contenido.add_child(volver)
+
+	var salir := Button.new()
+	salir.text = "Salir"
+	salir.custom_minimum_size = Vector2(220, 48)
+	salir.pressed.connect(func(): get_tree().quit())
+	contenido.add_child(salir)
+
+	DebugLogger.log_info("Partida completada")
+
+
+func _volver_al_menu() -> void:
+	if _final_overlay:
+		_final_overlay.queue_free()
+		_final_overlay = null
+	get_tree().change_scene_to_file("res://Scenes/UI/menulhds.tscn")
 
 
 # El servidor puede ordenar la transición en ambos equipos.

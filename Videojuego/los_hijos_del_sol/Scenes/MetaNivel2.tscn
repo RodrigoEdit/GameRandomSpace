@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://ckx8w2rvkjh2t"]
+
+[ext_resource type="Script" uid="uid://csxnm1ilbba7o" path="res://Scripts/meta_nivel_2.gd" id="1_meta"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_meta"]
+size = Vector2(96, 96)
+
+[node name="MetaNivel2" type="Area2D" unique_id=1857991838 groups=["meta_nivel"]]
+scale = Vector2(2, 2)
+script = ExtResource("1_meta")
+
+[node name="Visual" type="Polygon2D" parent="." unique_id=741027108]
+color = Color(1, 0.78, 0.12, 0.45)
+polygon = PackedVector2Array(-48, -48, 48, -48, 48, 48, -48, 48)
+
+[node name="Borde" type="Line2D" parent="." unique_id=465204988]
+points = PackedVector2Array(-48, -48, 48, -48, 48, 48, -48, 48, -48, -48)
+closed = true
+width = 5.0
+default_color = Color(1, 0.9, 0.3, 0.95)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=11755134]
+shape = SubResource("RectangleShape2D_meta")
