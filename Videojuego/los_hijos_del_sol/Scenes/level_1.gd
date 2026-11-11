@@ -22,6 +22,7 @@ func crear_servidor() -> void:
 	var error = peer.create_server(PORT, 2)
 	if error != OK:
 		print("Error al iniciar el servidor: ", error)
+		DebugLogger.log_error("Error al iniciar servidor: %s" % error)
 		return
 	
 	multiplayer.multiplayer_peer = peer
@@ -35,6 +36,7 @@ func crear_servidor() -> void:
 	# Instanciar a María (Host = ID 1)
 	spawning_player(1)
 	print("Servidor iniciado en el puerto ", PORT)
+	DebugLogger.log_info("Servidor iniciado en puerto %d" % PORT)
 
 # Botón CLIENTE
 func unirse_a_partida() -> void:
@@ -47,26 +49,31 @@ func unirse_a_partida() -> void:
 	var error = peer.create_client(ip, PORT)
 	if error != OK:
 		print("Error al conectar con la IP: ", error)
+		DebugLogger.log_error("Error creando cliente para %s:%d: %s" % [ip, PORT, error])
 		return
 		
 	multiplayer.multiplayer_peer = peer
 	print("Intentando conectar con ", ip, ":", PORT)
+	DebugLogger.log_info("Intentando conectar con %s:%d" % [ip, PORT])
 
 
 func _on_connected_to_server() -> void:
 	lobby_ui.hide()
 	print("Conectado al servidor. ID local: ", multiplayer.get_unique_id())
+	DebugLogger.log_info("Conectado al servidor. ID local: %d" % multiplayer.get_unique_id())
 
 
 func _on_connection_failed() -> void:
 	lobby_ui.show()
 	multiplayer.multiplayer_peer = null
 	push_error("No se pudo conectar al servidor. Revisa la IP, el puerto 7000 y el firewall.")
+	DebugLogger.log_error("Conexión fallida: revisa IP, puerto 7000 y firewall")
 
 
 func _on_server_disconnected() -> void:
 	lobby_ui.show()
 	push_error("El servidor se desconectó.")
+	DebugLogger.log_error("El servidor se desconectó")
 
 
 func cambiar_a_nivel_2() -> void:

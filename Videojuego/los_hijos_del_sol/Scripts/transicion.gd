@@ -15,9 +15,11 @@ func cambiar_nivel(ruta: String) -> void:
 
 	if not ResourceLoader.exists(ruta):
 		push_error("No existe la escena: " + ruta)
+		DebugLogger.log_error("Escena inexistente: " + ruta)
 		return
 
 	cambiando = true
+	DebugLogger.log_info("Iniciando transición a " + ruta)
 
 	var pantalla := get_viewport().get_visible_rect().size
 	var mitad := pantalla.x / 2.0
@@ -84,8 +86,10 @@ func cambiar_nivel(ruta: String) -> void:
 
 	if error == OK:
 		await get_tree().scene_changed
+		DebugLogger.log_info("Escena cargada: " + ruta)
 	else:
 		push_error("No se pudo cargar el nivel. Código: %s" % error)
+		DebugLogger.log_error("No se pudo cargar escena %s. Código: %s" % [ruta, error])
 
 	# Abrir el telón sobre el nuevo mapa.
 	var apertura := create_tween().set_parallel(true)

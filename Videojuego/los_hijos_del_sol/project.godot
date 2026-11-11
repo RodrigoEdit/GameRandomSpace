@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 ItemPopupManager="*uid://b8qsq8w3cqdrh"
 Inventory="*uid://bjp8hovnxefol"
 Transicion="*uid://d4nahsr88f5v3"
+DebugLogger="*res://Scripts/debug_logger.gd"
 
 [display]
 
