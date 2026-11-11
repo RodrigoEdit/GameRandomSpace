@@ -12,17 +12,22 @@ const PLAYER_ONE_SCENE = preload("res://Scenes/player_one.tscn")
 const PLAYER_TWO_SCENE = preload("res://Scenes/player_two.tscn")
 
 func _ready() -> void:
-	# 1. Detectar todas las placas del puzzle
+	# Conectar placas
 	for placa in get_tree().get_nodes_in_group("placas"):
 		placa.placa_activada.connect(_on_placa_activada)
 		placa.placa_desactivada.connect(_on_placa_desactivada)
 
-	# 2. Spawnear a ambos hermanos si venimos conectados en red
+	# Esperar a que la red y ambas ventanas terminen de montar la escena
 	if multiplayer.has_multiplayer_peer() and multiplayer.is_server():
-		spawning_player(1)
-		for peer_id in multiplayer.get_peers():
-			spawning_player(peer_id)
+		_iniciar_spawn_retrasado.call_deferred()
 
+func _iniciar_spawn_retrasado() -> void:
+	# Pequeña pausa de 0.2 segundos para que el cliente cargue Level2 completamente
+	await get_tree().create_timer(0.2).timeout
+	
+	spawning_player(1) # Host
+	for peer_id in multiplayer.get_peers():
+		spawning_player(peer_id) # Cliente
 func spawning_player(id: int) -> void:
 	var player: Node2D
 	if id == 1:
