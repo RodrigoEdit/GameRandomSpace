@@ -12,9 +12,9 @@ var ultima_direccion_x: float = 1.0 # 1.0 = derecha, -1.0 = izquierda
 @onready var health_bar: ProgressBar = $HealthBar
 @onready var health_label: Label = $HealthBar/Label
 
-#func _enter_tree() -> void:
+func _enter_tree() -> void:
 	# El nombre del nodo será el ID único de la conexión
-	#set_multiplayer_authority(name.to_int())
+	set_multiplayer_authority(name.to_int())
 	
 func _ready() -> void:
 	current_health = max_health
@@ -23,8 +23,8 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	# Si presiona Espacio/Enter (ui_accept) y no está atacando, lanza el ataque
-	#if not is_multiplayer_authority():
-		#return
+	if not is_multiplayer_authority():
+		return
 		
 	if Input.is_action_just_pressed("ui_accept") and not atacando:
 		realizar_ataque()

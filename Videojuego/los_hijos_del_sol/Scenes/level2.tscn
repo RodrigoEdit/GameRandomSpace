@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://cogphr2xidgwp" path="res://Sprites/inca_puzzle_map_labeled.png" id="1_cmmbj"]
 [ext_resource type="Script" uid="uid://btlroc3xxey41" path="res://Scripts/level_2.gd" id="1_onqnr"]
-[ext_resource type="PackedScene" uid="uid://7jhrm466a8k5" path="res://Scenes/player_one.tscn" id="2_ckivy"]
 [ext_resource type="PackedScene" uid="uid://c6cqturqhoge3" path="res://Scenes/caja.tscn" id="3_1k4by"]
 [ext_resource type="PackedScene" uid="uid://0xur50u48u8w" path="res://Scenes/placa.tscn" id="5_styii"]
+[ext_resource type="Texture2D" uid="uid://buq4ggr5je28a" path="res://Sprites/escudo.png" id="6_lgosu"]
 [ext_resource type="PackedScene" uid="uid://cuihkdytdy4x1" path="res://Scenes/puerta2.tscn" id="6_styii"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ckivy"]
@@ -24889,9 +24889,6 @@ polygon = PackedVector2Array(272, -177, 272, -82, 368, -82, 368, -176)
 [node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="TileMapLayer/StaticBody2D" unique_id=2090460330]
 polygon = PackedVector2Array(271, 112, 271, 208, 368, 208, 368, 112)
 
-[node name="Player_one" parent="TileMapLayer/StaticBody2D" unique_id=30051457 instance=ExtResource("2_ckivy")]
-position = Vector2(-792, -363)
-
 [node name="Placa" parent="." unique_id=112323875 instance=ExtResource("5_styii")]
 position = Vector2(-1023, -318)
 scale = Vector2(2, 2)
@@ -24928,3 +24925,12 @@ id_caja = "serpiente"
 
 [node name="Puerta" parent="." unique_id=545673791 instance=ExtResource("6_styii")]
 position = Vector2(-109, -658)
+
+[node name="spawn" type="Sprite2D" parent="." unique_id=603468591]
+position = Vector2(-18, 858)
+scale = Vector2(0.84375066, 0.8125008)
+texture = ExtResource("6_lgosu")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1116024803]
+_spawnable_scenes = PackedStringArray("uid://7jhrm466a8k5", "uid://bep7qvd27emfd")
+spawn_path = NodePath("../spawn")

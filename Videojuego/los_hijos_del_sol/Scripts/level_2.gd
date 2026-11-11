@@ -4,16 +4,39 @@ var sellos_activados: int = 0
 const TOTAL_SELLOS: int = 4
 
 # Referencia al nodo de la puerta
-@onready var puerta: Puerta = $Puerta
+@onready var puerta: Node2D = $Puerta
+@onready var colision_puerta: CollisionShape2D = $Puerta/CollisionShape2D
 
-# Ajusta esta ruta a tu nodo de colisión de la puerta
-@onready var colision_puerta: CollisionShape2D = $PuertaSellada/CollisionShape2D
+# Escenas de los jugadores para el spawn del Nivel 2
+const PLAYER_ONE_SCENE = preload("res://Scenes/player_one.tscn")
+const PLAYER_TWO_SCENE = preload("res://Scenes/player_two.tscn")
 
 func _ready() -> void:
-	# Detecta automáticamente todas las placas agregadas al grupo "placas"
+	# 1. Detectar todas las placas del puzzle
 	for placa in get_tree().get_nodes_in_group("placas"):
 		placa.placa_activada.connect(_on_placa_activada)
 		placa.placa_desactivada.connect(_on_placa_desactivada)
+
+	# 2. Spawnear a ambos hermanos si venimos conectados en red
+	if multiplayer.has_multiplayer_peer() and multiplayer.is_server():
+		spawning_player(1)
+		for peer_id in multiplayer.get_peers():
+			spawning_player(peer_id)
+
+func spawning_player(id: int) -> void:
+	var player: Node2D
+	if id == 1:
+		player = PLAYER_ONE_SCENE.instantiate()
+	else:
+		player = PLAYER_TWO_SCENE.instantiate()
+		
+	player.name = str(id)
+	$spawn.add_child(player, true)
+	
+	if id == 1:
+		player.global_position = $spawn.global_position
+	else:
+		player.global_position = $spawn.global_position + Vector2(25, 0)
 
 func _on_placa_activada(tipo: String) -> void:
 	sellos_activados += 1
@@ -26,12 +49,24 @@ func _on_placa_desactivada(tipo: String) -> void:
 
 func _verificar_puerta() -> void:
 	if sellos_activados >= TOTAL_SELLOS:
-		puerta.abrir_puerta()
+		# Si estamos en red, el servidor ejecuta la apertura para todos
+		if multiplayer.has_multiplayer_peer():
+			if multiplayer.is_server():
+				abrir_puerta.rpc()
+		else:
+			# Si estás probando en solitario con F6
+			abrir_puerta()
 
+@rpc("call_local", "reliable")
 func abrir_puerta() -> void:
 	print("¡Los 4 sellos están activados! Desbloqueando paso.")
+	
+	# Desactivar colisión
 	if colision_puerta:
 		colision_puerta.set_deferred("disabled", true)
-	# Opcional: Oculta el gráfico de la puerta sellada o activa una animación
-	if has_node("PuertaSellada"):
-		$PuertaSellada.hide()
+	
+	# Ocultar la puerta (o llamar a su método de abrir si tiene script)
+	if puerta.has_method("abrir_puerta"):
+		puerta.abrir_puerta()
+	else:
+		puerta.hide()

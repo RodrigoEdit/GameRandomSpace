@@ -19,3 +19,5 @@ texture = ExtResource("2_kois6")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=721848328]
 scale = Vector2(0.3, 0.3)
 shape = SubResource("RectangleShape2D_8w0r3")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=420176682]
