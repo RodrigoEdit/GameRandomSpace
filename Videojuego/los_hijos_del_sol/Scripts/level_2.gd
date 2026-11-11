@@ -2,6 +2,8 @@ extends Node2D
 
 var sellos_activados: int = 0
 const TOTAL_SELLOS: int = 4
+var jugadores_listos: Dictionary = {}
+var spawn_realizado: bool = false
 
 # Referencia al nodo de la puerta
 @onready var puerta: Node2D = $Puerta
@@ -17,14 +19,31 @@ func _ready() -> void:
 		placa.placa_activada.connect(_on_placa_activada)
 		placa.placa_desactivada.connect(_on_placa_desactivada)
 
-	# Esperar a que la red y ambas ventanas terminen de montar la escena
-	if multiplayer.has_multiplayer_peer() and multiplayer.is_server():
-		_iniciar_spawn_retrasado.call_deferred()
+	# Esperar a que todos los clientes tengan creado su Level2/MultiplayerSpawner.
+	if not multiplayer.has_multiplayer_peer():
+		spawning_player(1)
+	elif multiplayer.is_server():
+		jugadores_listos[1] = true
+		_intentar_spawn.call_deferred()
+	else:
+		_nivel_listo.rpc_id(1)
 
-func _iniciar_spawn_retrasado() -> void:
-	# Pequeña pausa de 0.2 segundos para que el cliente cargue Level2 completamente
-	await get_tree().create_timer(0.2).timeout
-	
+@rpc("any_peer", "reliable")
+func _nivel_listo() -> void:
+	if not multiplayer.is_server():
+		return
+	jugadores_listos[multiplayer.get_remote_sender_id()] = true
+	_intentar_spawn()
+
+
+func _intentar_spawn() -> void:
+	if spawn_realizado:
+		return
+	for peer_id in multiplayer.get_peers():
+		if not jugadores_listos.has(peer_id):
+			return
+
+	spawn_realizado = true
 	spawning_player(1) # Host
 	for peer_id in multiplayer.get_peers():
 		spawning_player(peer_id) # Cliente

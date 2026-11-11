@@ -69,6 +69,16 @@ func cambiar_nivel(ruta: String) -> void:
 	ocultar.tween_property(texto, "modulate:a", 0.0, 0.4)
 	await ocultar.finished
 
+	# Limpiar los despawns mientras ambos equipos aun tienen el nivel anterior.
+	# Si cambiamos primero, los paquetes llegan a un MultiplayerSpawner inexistente.
+	if multiplayer.has_multiplayer_peer() and multiplayer.is_server():
+		var spawner := get_tree().current_scene.get_node_or_null("MultiplayerSpawner") as MultiplayerSpawner
+		if spawner:
+			for player in get_tree().get_nodes_in_group("player"):
+				if is_instance_valid(player) and spawner.has_method("despawn"):
+					spawner.despawn(player)
+			await get_tree().create_timer(0.25).timeout
+
 	# Cargar el mapa mientras el telón está cerrado.
 	var error := get_tree().change_scene_to_file(ruta)
 
