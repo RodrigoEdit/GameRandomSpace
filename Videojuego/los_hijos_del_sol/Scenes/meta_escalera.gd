@@ -35,9 +35,12 @@ func _cuando_entra_cuerpo(body: Node2D) -> void:
 func _iniciar_transicion() -> void:
 	var nivel_actual = get_tree().current_scene
 	
-	# Si el nivel tiene la función de cambio sincronizado, la usamos
+	# El nivel actual debe pedirle al servidor que ordene el cambio sincronizado.
 	if nivel_actual.has_method("cambiar_a_nivel_2"):
 		nivel_actual.cambiar_a_nivel_2()
 	else:
-		# Respaldo si estás probando fuera de red
-		get_tree().change_scene_to_file(siguiente_nivel)
+		# Respaldo para niveles antiguos o pruebas sin red.
+		if multiplayer.has_multiplayer_peer():
+			push_error("El nivel actual no tiene cambiar_a_nivel_2(); no se cambia la escena en red.")
+		else:
+			Transicion.cambiar_nivel(siguiente_nivel)

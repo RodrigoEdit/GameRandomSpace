@@ -12,6 +12,9 @@ const PLAYER_TWO_SCENE = preload("res://Scenes/player_two.tscn")
 func _ready() -> void:
 	$LobbyUI/BtnHost.pressed.connect(crear_servidor)
 	$LobbyUI/BtnJoin.pressed.connect(unirse_a_partida)
+	multiplayer.connected_to_server.connect(_on_connected_to_server)
+	multiplayer.connection_failed.connect(_on_connection_failed)
+	multiplayer.server_disconnected.connect(_on_server_disconnected)
 
 # Botón HOST
 func crear_servidor() -> void:
@@ -31,6 +34,7 @@ func crear_servidor() -> void:
 	
 	# Instanciar a María (Host = ID 1)
 	spawning_player(1)
+	print("Servidor iniciado en el puerto ", PORT)
 
 # Botón CLIENTE
 func unirse_a_partida() -> void:
@@ -46,7 +50,35 @@ func unirse_a_partida() -> void:
 		return
 		
 	multiplayer.multiplayer_peer = peer
+	print("Intentando conectar con ", ip, ":", PORT)
+
+
+func _on_connected_to_server() -> void:
 	lobby_ui.hide()
+	print("Conectado al servidor. ID local: ", multiplayer.get_unique_id())
+
+
+func _on_connection_failed() -> void:
+	lobby_ui.show()
+	multiplayer.multiplayer_peer = null
+	push_error("No se pudo conectar al servidor. Revisa la IP, el puerto 7000 y el firewall.")
+
+
+func _on_server_disconnected() -> void:
+	lobby_ui.show()
+	push_error("El servidor se desconectó.")
+
+
+func cambiar_a_nivel_2() -> void:
+	var ruta := "res://Scenes/level2.tscn"
+
+	if not multiplayer.has_multiplayer_peer():
+		Transicion.cambiar_nivel(ruta)
+		return
+
+	if multiplayer.is_server():
+		# El RPC se ejecuta en el host y en todos los clientes.
+		Transicion.cambiar_nivel.rpc(ruta)
 
 # Instanciar personaje (Solo corre en el Host)
 func spawning_player(id: int) -> void:
