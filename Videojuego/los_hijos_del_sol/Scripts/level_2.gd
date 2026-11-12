@@ -14,6 +14,8 @@ const PLAYER_ONE_SCENE = preload("res://Scenes/player_one.tscn")
 const PLAYER_TWO_SCENE = preload("res://Scenes/player_two.tscn")
 
 func _ready() -> void:
+	MusicManager.play_level(2)
+	_actualizar_objetivo()
 	# Conectar placas
 	for placa in get_tree().get_nodes_in_group("placas"):
 		placa.placa_activada.connect(_on_placa_activada)
@@ -89,11 +91,13 @@ func respawn_player(id: int) -> void:
 
 func _on_placa_activada(tipo: String) -> void:
 	sellos_activados += 1
+	_actualizar_objetivo()
 	print("Sello correcto encajado: ", tipo, ". Total: ", sellos_activados, "/4")
 	_verificar_puerta()
 
 func _on_placa_desactivada(tipo: String) -> void:
 	sellos_activados = max(0, sellos_activados - 1)
+	_actualizar_objetivo()
 	print("Caja retirada de la placa: ", tipo, ". Total: ", sellos_activados, "/4")
 
 func _verificar_puerta() -> void:
@@ -108,6 +112,7 @@ func _verificar_puerta() -> void:
 
 @rpc("call_local", "reliable")
 func abrir_puerta() -> void:
+	_actualizar_objetivo()
 	print("¡Los 4 sellos están activados! Desbloqueando paso.")
 	
 	# Desactivar colisión
@@ -119,3 +124,12 @@ func abrir_puerta() -> void:
 		puerta.abrir_puerta()
 	else:
 		puerta.hide()
+
+
+func _actualizar_objetivo() -> void:
+	var hud := get_tree().get_first_node_in_group("hud") as PlayerHUD
+	if hud:
+		if sellos_activados >= TOTAL_SELLOS:
+			hud.set_objective("ENCUENTRA LA SALIDA")
+		else:
+			hud.set_objective("SELLOS: %d/%d" % [sellos_activados, TOTAL_SELLOS])

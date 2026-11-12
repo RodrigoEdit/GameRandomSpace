@@ -100,7 +100,7 @@ position = Vector2(-548, 458)
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=354394062]
 stream = ExtResource("9_jgkgd")
 volume_db = -18.468
-autoplay = true
+autoplay = false
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=845417660]
 z_index = -1
@@ -122,6 +122,7 @@ position = Vector2(-493, 522)
 
 [node name="Skeleton4" parent="." unique_id=390025706 instance=ExtResource("3_c5erv")]
 position = Vector2(756, 715)
+variant = "Guardian"
 
 [node name="Puerta2" parent="." unique_id=880153492 instance=ExtResource("5_y4dr7")]
 position = Vector2(1, 507)
@@ -162,7 +163,7 @@ theme_override_colors/font_color = Color(0.85240334, 0.8635549, 1, 1)
 text = "Unirse por IP"
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=471789652]
-_spawnable_scenes = PackedStringArray("uid://7jhrm466a8k5", "uid://bep7qvd27emfd")
+_spawnable_scenes = PackedStringArray("uid://7jhrm466a8k5", "uid://bep7qvd27emfd", "uid://c8yjeir544gpm")
 spawn_path = NodePath("../spawn")
 
 [node name="spawn" type="Sprite2D" parent="." unique_id=214032858]

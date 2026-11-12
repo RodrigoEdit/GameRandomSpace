@@ -100,13 +100,25 @@ func cambiar_nivel(ruta: String) -> void:
 	centro.size = pantalla
 	centro.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	bloqueo.add_child(centro)
+	var contenido := VBoxContainer.new()
+	contenido.alignment = BoxContainer.ALIGNMENT_CENTER
+	contenido.add_theme_constant_override("separation", 14)
+	centro.add_child(contenido)
 
 	var texto := Label.new()
 	texto.text = "¡NIVEL 1 COMPLETADO!"
 	texto.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	texto.add_theme_font_size_override("font_size", 45)
 	texto.modulate.a = 0.0
-	centro.add_child(texto)
+	contenido.add_child(texto)
+
+	var barra_carga := ProgressBar.new()
+	barra_carga.custom_minimum_size = Vector2(360, 22)
+	barra_carga.max_value = 100.0
+	barra_carga.value = 0.0
+	barra_carga.show_percentage = true
+	barra_carga.modulate.a = 0.0
+	contenido.add_child(barra_carga)
 
 	# Cerrar el telón.
 	var cierre := create_tween().set_parallel(true)
@@ -125,6 +137,9 @@ func cambiar_nivel(ruta: String) -> void:
 	var ocultar := create_tween()
 	ocultar.tween_property(texto, "modulate:a", 0.0, 0.4)
 	await ocultar.finished
+	texto.text = "CARGANDO NIVEL 2..."
+	texto.modulate.a = 1.0
+	barra_carga.modulate.a = 1.0
 
 	# Limpiar los despawns mientras ambos equipos aun tienen el nivel anterior.
 	# Si cambiamos primero, los paquetes llegan a un MultiplayerSpawner inexistente.
@@ -137,7 +152,24 @@ func cambiar_nivel(ruta: String) -> void:
 			await get_tree().create_timer(0.25).timeout
 
 	# Cargar el mapa mientras el telón está cerrado.
-	var error := get_tree().change_scene_to_file(ruta)
+	var escena_cargada := await _cargar_escena_con_progreso(ruta, barra_carga)
+	if escena_cargada:
+		var cambio := get_tree().change_scene_to_packed(escena_cargada)
+		if cambio == OK:
+			await get_tree().scene_changed
+			barra_carga.value = 100.0
+			DebugLogger.log_info("Escena cargada: " + ruta)
+		else:
+			DebugLogger.log_error("No se pudo cambiar a escena cargada: %s" % cambio)
+	var error := OK
+	var apertura_carga := create_tween().set_parallel(true)
+	apertura_carga.tween_property(izquierda, "size:x", 0.0, 1.2)
+	apertura_carga.tween_property(derecha, "size:x", 0.0, 1.2)
+	apertura_carga.tween_property(derecha, "position:x", pantalla.x, 1.2)
+	await apertura_carga.finished
+	bloqueo.queue_free()
+	cambiando = false
+	return
 
 	if error == OK:
 		await get_tree().scene_changed
@@ -155,3 +187,25 @@ func cambiar_nivel(ruta: String) -> void:
 
 	bloqueo.queue_free()
 	cambiando = false
+
+
+func _cargar_escena_con_progreso(ruta: String, barra: ProgressBar) -> PackedScene:
+	var solicitud := ResourceLoader.load_threaded_request(ruta)
+	if solicitud != OK:
+		push_error("No se pudo iniciar la carga. Código: %s" % solicitud)
+		DebugLogger.log_error("No se pudo iniciar carga de %s. Código: %s" % [ruta, solicitud])
+		return null
+
+	var progreso: Array = []
+	var estado := ResourceLoader.THREAD_LOAD_IN_PROGRESS
+	while estado == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+		estado = ResourceLoader.load_threaded_get_status(ruta, progreso)
+		if not progreso.is_empty():
+			barra.value = progreso[0] * 100.0
+		await get_tree().process_frame
+
+	if estado != ResourceLoader.THREAD_LOAD_LOADED:
+		push_error("No se pudo cargar el nivel. Estado: %s" % estado)
+		DebugLogger.log_error("No se pudo cargar escena %s. Estado: %s" % [ruta, estado])
+		return null
+	return ResourceLoader.load_threaded_get(ruta) as PackedScene

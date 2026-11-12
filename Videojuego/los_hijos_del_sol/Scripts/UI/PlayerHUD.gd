@@ -8,6 +8,7 @@ extends CanvasLayer
 @onready var _health_bar: ProgressBar = $Root/BottomPanel/StatusRow/HealthBar
 @onready var _buffs_container: HBoxContainer = $Root/BottomPanel/StatusRow/StatusBuffsContainer
 @onready var _usage_bar: ProgressBar = $Root/BottomPanel/UsageBar
+@onready var _objective_label: Label = $Root/ObjectiveLabel
 
 # StatusEffect -> { "holder": Control, "label": Label }
 var _buff_widgets: Dictionary = {}
@@ -19,6 +20,12 @@ func _ready() -> void:
 	_usage_bar.max_value = 1.0
 	_usage_bar.step = 0.001
 	_usage_bar.value = 0.0
+	_objective_label.visible = true
+
+
+func set_objective(texto: String) -> void:
+	_objective_label.text = texto
+	_objective_label.visible = true
 
 
 func bind_player(player: Player) -> void:
@@ -28,6 +35,12 @@ func bind_player(player: Player) -> void:
 	player.effects.effect_removed.connect(_on_effect_removed)
 	_on_health_changed(player.current_health, player.max_health)
 	_on_usage_progress_changed(0.0)
+
+
+func bind_player_one(player: Node) -> void:
+	if player.has_signal("health_changed"):
+		player.connect("health_changed", _on_health_changed)
+	_on_health_changed(player.current_health, player.max_health)
 
 
 func _process(_delta: float) -> void:

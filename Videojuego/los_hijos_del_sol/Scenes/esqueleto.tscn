@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://rddnidlci52h" path="res://Scripts/esqueleto.gd" id="1_i66f8"]
 [ext_resource type="Texture2D" uid="uid://cbutxstf3w1a7" path="res://Sprites/esqueleto.png" id="1_offkl"]
+[ext_resource type="AudioStream" path="res://Audio/sfx-magic11.mp3" id="2_attack"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i66f8"]
 atlas = ExtResource("1_offkl")
@@ -151,6 +152,9 @@ properties/2/replication_mode = 1
 properties/3/path = NodePath("AnimatedSprite2D:flip_h")
 properties/3/spawn = true
 properties/3/replication_mode = 1
+properties/4/path = NodePath("HealthBar:value")
+properties/4/spawn = true
+properties/4/replication_mode = 1
 
 [node name="Skeleton" type="CharacterBody2D" unique_id=1425578663]
 script = ExtResource("1_i66f8")
@@ -160,9 +164,22 @@ sprite_frames = SubResource("SpriteFrames_h7xjn")
 animation = &"walk_side"
 frame_progress = 0.64603484
 
+[node name="SonidoAtaque" type="AudioStreamPlayer2D" parent="." unique_id=1327903492]
+stream = ExtResource("2_attack")
+volume_db = -12.0
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=635805959]
 position = Vector2(-10, 45)
 shape = SubResource("CapsuleShape2D_h7xjn")
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=635805960]
+offset_left = -28.0
+offset_top = -70.0
+offset_right = 28.0
+offset_bottom = -62.0
+max_value = 50.0
+value = 50.0
+show_percentage = false
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=1156939393]
 visible = false

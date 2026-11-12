@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal died
+signal health_changed(current: int, maximum: int)
 
 @export var speed: float = 140.0
 @export var max_health: int = 100
@@ -9,6 +10,10 @@ signal died
 var current_health: int
 var atacando: bool = false
 var ultima_direccion_x: float = 1.0 # 1.0 = derecha, -1.0 = izquierda
+var _hotbar: HotbarManager = null
+var _speed_multiplier: float = 1.0
+var _speed_boost_left: float = 0.0
+var _shield_hits: int = 0
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var health_bar: ProgressBar = $HealthBar
@@ -22,9 +27,29 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	# Cada ventana debe seguir únicamente a su jugador local.
 	$Camera2D.enabled = is_multiplayer_authority()
+	health_bar.visible = false
+	health_label.visible = false
 	current_health = max_health
 	health_bar.max_value = max_health
 	actualizar_interfaz_vida()
+	_bind_hotbar.call_deferred()
+	_bind_hud.call_deferred()
+
+
+func _bind_hud() -> void:
+	if not is_multiplayer_authority():
+		return
+	var hud := get_tree().get_first_node_in_group("hud") as PlayerHUD
+	if hud:
+		hud.bind_player_one(self)
+
+
+func _bind_hotbar() -> void:
+	if not is_multiplayer_authority():
+		return
+	var hud := get_tree().get_first_node_in_group("hud") as PlayerHUD
+	if hud:
+		_hotbar = hud.hotbar
 
 func _physics_process(_delta: float) -> void:
 	# Si presiona Espacio/Enter (ui_accept) y no está atacando, lanza el ataque
@@ -45,7 +70,11 @@ func _physics_process(_delta: float) -> void:
 	if input_dir.x != 0:
 		ultima_direccion_x = -1.0 if input_dir.x < 0 else 1.0
 
-	velocity = input_dir * speed
+	if _speed_boost_left > 0.0:
+		_speed_boost_left -= _delta
+		if _speed_boost_left <= 0.0:
+			_speed_multiplier = 1.0
+	velocity = input_dir * speed * _speed_multiplier
 	move_and_slide()
 	
 	# Detecta colisiones tras mover al personaje
@@ -69,9 +98,32 @@ func _physics_process(_delta: float) -> void:
 
 # Pruebas de daño, vida y tecla extra de ataque (K)
 func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("use_item"):
+		_usar_item_seleccionado()
+		return
+
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_K and not atacando:
 			realizar_ataque()
+
+
+func _usar_item_seleccionado() -> void:
+	if _hotbar == null:
+		return
+	var item: ItemData = _hotbar.get_selected_item()
+	if item == null or item.item_type != ItemData.ItemType.CONSUMABLE:
+		return
+	if not _hotbar.consume_selected():
+		return
+
+	match item.effect_type:
+		ItemData.EffectType.HEAL:
+			heal(item.heal_amount)
+		ItemData.EffectType.SPEED_BOOST:
+			_speed_multiplier = item.speed_multiplier
+			_speed_boost_left = item.effect_duration
+		ItemData.EffectType.SHIELD:
+			_shield_hits = item.shield_hits
 		#elif event.keycode == KEY_J:
 			#take_damage(20)
 		#elif event.keycode == KEY_H:
@@ -125,8 +177,12 @@ func actualizar_animacion(dir: Vector2) -> void:
 func actualizar_interfaz_vida() -> void:
 	health_bar.value = current_health
 	health_label.text = str(current_health) + " / " + str(max_health)
+	health_changed.emit(current_health, max_health)
 
 func take_damage(amount: int) -> void:
+	if _shield_hits > 0:
+		_shield_hits -= 1
+		return
 	current_health = clamp(current_health - amount, 0, max_health)
 	actualizar_interfaz_vida()
 	

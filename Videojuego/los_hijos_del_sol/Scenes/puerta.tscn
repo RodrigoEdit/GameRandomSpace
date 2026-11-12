@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://gqdl6y6g72tu" path="res://Scenes/puerta.gd" id="1_e83nb"]
 [ext_resource type="Texture2D" uid="uid://4xrghp3vgw6a" path="res://Resource/Puerta medieval arqueada en pixel art (1).png" id="2_tswu4"]
+[ext_resource type="AudioStream" path="res://Audio/sfx-magic11.mp3" id="3_door"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8im1s"]
 size = Vector2(127, 66)
@@ -34,3 +35,21 @@ offset_left = -808.0
 offset_top = -279.0
 offset_right = -678.0
 offset_bottom = -238.0
+
+[node name="SonidoApertura" type="AudioStreamPlayer2D" parent="." unique_id=157553396]
+stream = ExtResource("3_door")
+volume_db = -10.0
+
+[node name="ParticulasApertura" type="CPUParticles2D" parent="." unique_id=157553397]
+amount = 28
+lifetime = 1.2
+one_shot = true
+explosiveness = 0.85
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, 35)
+initial_velocity_min = 35.0
+initial_velocity_max = 75.0
+scale_amount_min = 1.5
+scale_amount_max = 3.0
+color = Color(1, 0.78, 0.25, 0.9)

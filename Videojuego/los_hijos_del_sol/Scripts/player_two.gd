@@ -20,6 +20,7 @@ var current_health: int
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var effects: StatusEffectManager = $StatusEffectManager
 @onready var pasos: AudioStreamPlayer2D = $Pasos
+@onready var sonido_ataque: AudioStreamPlayer2D = $SonidoAtaque
 
 # Nodos de Hitbox según la jerarquía de tu escena (HitboxPivot -> Area2D -> CollisionShape2D)
 @onready var hitbox_pivot: Node2D = $HitboxPivot
@@ -65,6 +66,8 @@ func _ready() -> void:
 
 
 func _bind_hud() -> void:
+	if not is_multiplayer_authority():
+		return
 	var hud: PlayerHUD = get_tree().get_first_node_in_group("hud") as PlayerHUD
 	if hud == null:
 		push_warning("Player: no se encontró la HUD (grupo 'hud').")
@@ -137,6 +140,8 @@ func _unhandled_input(event: InputEvent) -> void:
 func _perform_attack() -> void:
 	is_attacking = true
 	velocity = Vector2.ZERO
+	if sonido_ataque:
+		sonido_ataque.play()
 	_attack_cooldown_left = equipped_weapon.attack_cooldown if equipped_weapon else 0.5
 	attack_performed.emit(equipped_weapon)
 	

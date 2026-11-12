@@ -10,6 +10,7 @@ const PLAYER_TWO_SCENE = preload("res://Scenes/player_two.tscn")
 @onready var input_ip: LineEdit = $LobbyUI/InputIP
 
 func _ready() -> void:
+	MusicManager.play_level(1)
 	$LobbyUI/BtnHost.pressed.connect(crear_servidor)
 	$LobbyUI/BtnJoin.pressed.connect(unirse_a_partida)
 	multiplayer.connected_to_server.connect(_on_connected_to_server)

@@ -7,6 +7,8 @@ var abierta: bool = false
 
 @onready var label: Label = $Label
 @onready var colision_fisica: CollisionShape2D = $CollisionShape2D
+@onready var sonido_apertura: AudioStreamPlayer2D = $SonidoApertura
+@onready var particulas_apertura: CPUParticles2D = $ParticulasApertura
 #@onready var color_rect: ColorRect = $ColorRect
 
 func _ready() -> void:
@@ -14,6 +16,7 @@ func _ready() -> void:
 	$Area2D.body_entered.connect(_on_area_2d_body_entered)
 	$Area2D.body_exited.connect(_on_area_2d_body_exited)
 	ItemPopupManager.item_accepted.connect(_on_item_accepted)
+	_actualizar_objetivo()
 
 
 func _on_item_accepted(_item: ItemData) -> void:
@@ -34,6 +37,7 @@ func _registrar_item() -> void:
 	if abierta:
 		return
 	items_actuales += 1
+	_actualizar_objetivo()
 	print("Objeto recogido: ", items_actuales, "/", items_requeridos)
 	if items_actuales >= items_requeridos:
 		if multiplayer.has_multiplayer_peer():
@@ -78,11 +82,25 @@ func mostrar_mensaje(texto: String) -> void:
 	label.text = texto
 	label.visible = true
 
+
+func _actualizar_objetivo() -> void:
+	var hud := get_tree().get_first_node_in_group("hud") as PlayerHUD
+	if hud:
+		if abierta:
+			hud.set_objective("ENCUENTRA LA SALIDA")
+		else:
+			hud.set_objective("OBJETOS: %d/%d" % [items_actuales, items_requeridos])
+
 @rpc("authority", "call_local", "reliable")
 func abrir_puerta() -> void:
 	if abierta:
 		return
 	abierta = true
+	_actualizar_objetivo()
+	if sonido_apertura:
+		sonido_apertura.play()
+	if particulas_apertura:
+		particulas_apertura.emitting = true
 	colision_fisica.set_deferred("disabled", true)
 	#color_rect.visible = false
 	label.visible = false

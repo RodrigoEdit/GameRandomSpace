@@ -1,8 +1,10 @@
 extends CharacterBody2D
 
 @export var speed: float = 60.0
-@export var detection_range: float = 20000.0
+@export var detection_range: float = 450.0
 @export var attack_range: float = 35.0
+@export_enum("Normal", "Guardian") var variant: String = "Normal"
+@export var patrol_distance: float = 100.0
 
 # Sistema de vida y daño
 @export var max_health: int = 50
@@ -12,14 +14,29 @@ var current_health: int
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hitbox: Area2D = $Hitbox
 @onready var hitbox_collision: CollisionShape2D = $Hitbox/CollisionShape2D
+@onready var sonido_ataque: AudioStreamPlayer2D = $SonidoAtaque
+@onready var health_bar: ProgressBar = $HealthBar
 
 var player: CharacterBody2D = null
 var is_attacking: bool = false
 var is_dead: bool = false
+var patrol_origin: Vector2
+var patrol_time: float = 0.0
 
 	
 func _ready() -> void:
 	current_health = max_health
+	patrol_origin = global_position
+	if variant == "Guardian":
+		max_health = 90
+		current_health = max_health
+		speed = 45.0
+		attack_damage = 25
+		anim.scale *= 1.15
+		anim.modulate = Color(0.72, 0.86, 1.0, 1.0)
+	if health_bar:
+		health_bar.max_value = max_health
+		health_bar.value = current_health
 	player = get_tree().get_first_node_in_group("player") as CharacterBody2D
 	hitbox.body_entered.connect(_on_hitbox_body_entered)
 	
@@ -55,9 +72,16 @@ func _physics_process(_delta: float) -> void:
 			move_and_slide()
 			update_animation(direction)
 	else:
-		velocity = Vector2.ZERO
-		anim.play("walk_down")
-		anim.stop()
+		_patrol(_delta)
+
+
+func _patrol(delta: float) -> void:
+	patrol_time += delta
+	var target := patrol_origin + Vector2(sin(patrol_time * 0.8) * patrol_distance, 0.0)
+	var direction := (target - global_position).normalized()
+	velocity = direction * speed * 0.45
+	move_and_slide()
+	update_animation(direction if direction != Vector2.ZERO else Vector2.DOWN)
 
 func update_animation(dir: Vector2) -> void:
 	if dir.x != 0:
@@ -75,6 +99,8 @@ func _orient_side(is_left: bool) -> void:
 func start_attack() -> void:
 	is_attacking = true
 	velocity = Vector2.ZERO
+	if sonido_ataque:
+		sonido_ataque.play()
 	
 	if player:
 		var is_left = player.global_position.x < global_position.x
@@ -103,6 +129,8 @@ func take_damage(amount: int) -> void:
 		return
 
 	current_health -= amount
+	if health_bar:
+		health_bar.value = current_health
 	print("Esqueleto recibió daño. Vida restante: ", current_health)
 
 	if current_health <= 0:
@@ -127,8 +155,22 @@ func die() -> void:
 		anim.play("death")
 		await anim.animation_finished
 
+	_drop_loot()
+
 	hide()
 	set_physics_process(false)
+
+
+func _drop_loot() -> void:
+	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
+		return
+	var spawn := get_tree().current_scene.get_node_or_null("spawn")
+	if spawn == null:
+		return
+	var drop := preload("res://Scenes/ItemSparkle.tscn").instantiate()
+	drop.name = "EnemyDrop_%d_%d" % [Time.get_ticks_msec(), get_instance_id()]
+	drop.global_position = global_position
+	spawn.add_child(drop, true)
 	
 # Cuando el ataque conecta con el jugador
 func _on_hitbox_body_entered(body: Node2D) -> void:
