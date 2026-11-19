@@ -100,7 +100,6 @@ position = Vector2(-548, 458)
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=354394062]
 stream = ExtResource("9_jgkgd")
 volume_db = -18.468
-autoplay = false
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=845417660]
 z_index = -1
@@ -118,7 +117,7 @@ position = Vector2(-800.75, 1018)
 shape = SubResource("RectangleShape2D_8im1s")
 
 [node name="Skeleton3" parent="." unique_id=2078534509 instance=ExtResource("3_c5erv")]
-position = Vector2(-493, 522)
+position = Vector2(627, -134)
 
 [node name="Skeleton4" parent="." unique_id=390025706 instance=ExtResource("3_c5erv")]
 position = Vector2(756, 715)
