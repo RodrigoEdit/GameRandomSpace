@@ -1,7 +1,11 @@
 extends CanvasLayer
 
+signal cliente_listo
+
 var cambiando: bool = false
 var _final_overlay: Control = null
+var _ruta_destino: String = ""
+var _clientes_listos: Dictionary = {}
 
 
 func _ready() -> void:
@@ -74,6 +78,8 @@ func cambiar_nivel(ruta: String) -> void:
 		return
 
 	cambiando = true
+	_ruta_destino = ruta
+	_clientes_listos.clear()
 	DebugLogger.log_info("Iniciando transición a " + ruta)
 
 	var pantalla := get_viewport().get_visible_rect().size
@@ -157,6 +163,8 @@ func cambiar_nivel(ruta: String) -> void:
 		var cambio := get_tree().change_scene_to_packed(escena_cargada)
 		if cambio == OK:
 			await get_tree().scene_changed
+			if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
+				_confirmar_escena_cargada.rpc_id(1, ruta)
 			barra_carga.value = 100.0
 			DebugLogger.log_info("Escena cargada: " + ruta)
 		else:
@@ -187,6 +195,24 @@ func cambiar_nivel(ruta: String) -> void:
 
 	bloqueo.queue_free()
 	cambiando = false
+
+
+# El aviso puede llegar antes de que el servidor haya instalado la escena.
+@rpc("any_peer", "reliable")
+func _confirmar_escena_cargada(ruta: String) -> void:
+	if not multiplayer.is_server() or ruta != _ruta_destino:
+		return
+	var peer_id := multiplayer.get_remote_sender_id()
+	if peer_id in multiplayer.get_peers():
+		_clientes_listos[peer_id] = true
+		cliente_listo.emit()
+
+
+func clientes_tienen_escena(ruta: String) -> bool:
+	for peer_id in multiplayer.get_peers():
+		if ruta != _ruta_destino or not _clientes_listos.has(peer_id):
+			return false
+	return true
 
 
 func _cargar_escena_con_progreso(ruta: String, barra: ProgressBar) -> PackedScene:

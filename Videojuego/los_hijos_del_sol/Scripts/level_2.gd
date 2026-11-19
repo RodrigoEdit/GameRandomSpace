@@ -2,7 +2,6 @@ extends Node2D
 
 var sellos_activados: int = 0
 const TOTAL_SELLOS: int = 4
-var jugadores_listos: Dictionary = {}
 var spawn_realizado: bool = false
 
 # Referencia al nodo de la puerta
@@ -28,36 +27,28 @@ func _ready() -> void:
 			if sincronizador:
 				sincronizador.public_visibility = false
 
-	# Esperar a que todos los clientes tengan creado su Level2/MultiplayerSpawner.
 	if not multiplayer.has_multiplayer_peer():
 		spawning_player(1)
 	elif multiplayer.is_server():
-		jugadores_listos[1] = true
+		Transicion.cliente_listo.connect(_intentar_spawn)
+		multiplayer.peer_disconnected.connect(_al_desconectar_cliente)
 		_intentar_spawn.call_deferred()
-	else:
-		_nivel_listo.rpc_id(1)
 
-@rpc("any_peer", "reliable")
-func _nivel_listo() -> void:
-	if not multiplayer.is_server():
-		return
-	var peer_id := multiplayer.get_remote_sender_id()
-	jugadores_listos[peer_id] = true
-	for caja in get_tree().get_nodes_in_group("cajas"):
-		var sincronizador := caja.get_node_or_null("MultiplayerSynchronizer") as MultiplayerSynchronizer
-		if sincronizador:
-			sincronizador.set_visibility_for(peer_id, true)
-	_intentar_spawn()
+
+func _al_desconectar_cliente(_peer_id: int) -> void:
+	_intentar_spawn.call_deferred()
 
 
 func _intentar_spawn() -> void:
-	if spawn_realizado:
+	if spawn_realizado or not Transicion.clientes_tienen_escena(scene_file_path):
 		return
-	for peer_id in multiplayer.get_peers():
-		if not jugadores_listos.has(peer_id):
-			return
 
 	spawn_realizado = true
+	for caja in get_tree().get_nodes_in_group("cajas"):
+		var sincronizador := caja.get_node_or_null("MultiplayerSynchronizer") as MultiplayerSynchronizer
+		if sincronizador:
+			for peer_id in multiplayer.get_peers():
+				sincronizador.set_visibility_for(peer_id, true)
 	spawning_player(1) # Host
 	for peer_id in multiplayer.get_peers():
 		spawning_player(peer_id) # Cliente
